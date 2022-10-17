@@ -5,6 +5,8 @@ const GlobalStyle = createGlobalStyle`
           --text-primary: #0c2c4d;
           --background-primary: #edf0f5;
       }
+
+      
   
       * {
           box-sizing: border-box;
