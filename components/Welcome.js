@@ -9,6 +9,4 @@ const WelcomeText = styled.h2`
   font-style: normal;
   font-weight: 900;
   font-size: 2.2rem;
-  padding-top: 3rem;
-  padding-left: 1.5rem;
 `;

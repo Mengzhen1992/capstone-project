@@ -2,29 +2,32 @@ import React from "react";
 import styled from "styled-components";
 import TaskItem from "./TaskItem";
 
+function generateID() {
+  return Math.random().toString(36).substring(2);
+}
 const initialTasks = [
   {
-    id: Math.random().toString(36).substring(2),
+    id: generateID(),
     taskName: "Reading",
     duration: "30min",
   },
   {
-    id: Math.random().toString(36).substring(2),
+    id: generateID(),
     taskName: "Capstone Project",
     duration: "6h",
   },
   {
-    id: Math.random().toString(36).substring(2),
+    id: generateID(),
     taskName: "Pilates",
     duration: "45min",
   },
   {
-    id: Math.random().toString(36).substring(2),
+    id: generateID(),
     taskName: "Cleaning room",
     duration: "10min",
   },
   {
-    id: Math.random().toString(36).substring(2),
+    id: generateID(),
     taskName: "Update CV",
     duration: "1h",
   },
@@ -49,15 +52,17 @@ const TaskWrap = styled.ul`
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  margin: 1.5rem;
+  margin-top: 1.5rem;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
   padding-bottom: 0.6rem;
 `;
 
-const TaskTitle = styled.h3`
+const TaskTitle = styled.li`
   font-family: var(--font-primary);
   font-style: normal;
   font-weight: 400;
   font-size: 1.2rem;
-  padding-left: 0.8rem;
-  padding-top: 0.6rem;
+  padding-left: 1rem;
+  padding-top: 1rem;
 `;
