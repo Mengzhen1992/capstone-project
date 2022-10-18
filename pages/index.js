@@ -5,11 +5,11 @@ import Welcome from "../components/Welcome";
 
 export default function Home() {
   function getCurrentDate() {
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let dates = date.getDate();
-    let arr = [
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const dates = date.getDate();
+    const arr = [
       "Sunday",
       "Monday",
       "Tuesday",
@@ -18,7 +18,7 @@ export default function Home() {
       "Friday",
       "Saturday",
     ];
-    let day = date.getDay();
+    const day = date.getDay();
     return year + "." + month + "." + dates + " " + arr[day];
   }
   return (
@@ -45,19 +45,21 @@ const Wrap = styled.div`
 `;
 
 const WrapMask = styled.div`
+  display: grid;
+  grid-template-columns: 1.5rem auto 1.5rem;
+  grid-template-rows: 2rem 2.5rem 1.5rem 1rem repeat(2, 1fr) 2rem;
   width: 100vw;
   min-height: 100vh;
   background: rgba(253, 231, 190, 0.4);
   backdrop-filter: blur(40px);
-  padding-bottom: 1.5rem;
 `;
 
 const WelcomeStyle = styled.div`
-  padding-top: 2rem;
-  padding-left: 1.5rem;
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 1;
 `;
 
 const DateDisplayStyle = styled.div`
-  margin-top: 0.3rem;
-  padding-left: 1.5rem;
+  grid-column: 2 / span 1;
+  grid-row: 3 / span 1;
 `;

@@ -15,7 +15,7 @@ const Item = styled.li`
   background: rgba(255, 255, 255, 0.5);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  margin: 0.8rem;
+  margin: 0.8rem 0.8rem 0.8rem 0;
   padding-left: 4rem;
   padding-top: 0.8rem;
   padding-bottom: 0.8rem;

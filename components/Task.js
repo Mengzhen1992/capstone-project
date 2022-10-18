@@ -52,10 +52,11 @@ const TaskWrap = styled.ul`
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  margin-top: 1.5rem;
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
+  grid-column: 2 / span 1;
+  grid-row: 5 / span 1;
   padding-bottom: 0.6rem;
+  padding-left: 1rem;
+  padding-top: 1rem;
 `;
 
 const TaskTitle = styled.li`
@@ -63,6 +64,4 @@ const TaskTitle = styled.li`
   font-style: normal;
   font-weight: 400;
   font-size: 1.2rem;
-  padding-left: 1rem;
-  padding-top: 1rem;
 `;
