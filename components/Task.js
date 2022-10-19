@@ -35,20 +35,21 @@ const initialTasks = [
 
 export default function Task() {
   return (
-    <TaskWrap>
+    <TaskContainer>
       <TaskTitle>Ongoing Tasks</TaskTitle>
-      {initialTasks.map((item) => (
-        <TaskItem
-          key={item.id}
-          taskName={item.taskName}
-          duration={item.duration}
-        />
-      ))}
-    </TaskWrap>
+      <ul>
+        {initialTasks.map((item) => (
+          <TaskItem
+            key={item.id}
+            taskName={item.taskName}
+            duration={item.duration}
+          />
+        ))}
+      </ul>
+    </TaskContainer>
   );
 }
-
-const TaskWrap = styled.ul`
+const TaskContainer = styled.div`
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;

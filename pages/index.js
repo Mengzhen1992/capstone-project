@@ -31,7 +31,6 @@ export default function Home() {
           <DateDisplay date={getCurrentDate()} />
         </DateDisplayStyle>
         <Task />
-        <Task />
       </WrapMask>
     </Wrap>
   );
