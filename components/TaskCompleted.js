@@ -5,8 +5,6 @@ import styled from "styled-components";
 export default function TaskCompleted({ task, handleToggleTask }) {
   if (task === undefined || task === null || task.length === 0) return null;
 
-  console.log("task: ", task);
-
   const summeTask = task.length;
   const amountCompletedTask = task.filter((item) => item.checked).length;
   const completedPercent = (amountCompletedTask / summeTask) * 100 + "%";
