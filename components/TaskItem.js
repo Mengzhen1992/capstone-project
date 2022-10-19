@@ -4,12 +4,11 @@ import checkedButton from "../public/images/checked.svg";
 import Image from "next/image";
 import { useState } from "react";
 
-const TaskItem = ({ taskName, duration }) => {
-  const [checkStatus, setCheckStatus] = useState(false);
+const TaskItem = ({ id, taskName, duration, checked, handleToggleTask }) => {
   return (
     <Item>
-      <ImageContainer onClick={() => setCheckStatus(!checkStatus)}>
-        {!checkStatus ? (
+      <ImageContainer onClick={() => handleToggleTask(id)}>
+        {!checked ? (
           <Image src={uncheckButton} alt="uncheck button of a task item" />
         ) : (
           <Image src={checkedButton} alt="checked button of a task item" />

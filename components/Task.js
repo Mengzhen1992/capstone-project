@@ -2,65 +2,40 @@ import React from "react";
 import styled from "styled-components";
 import TaskItem from "./TaskItem";
 
-function generateID() {
-  return Math.random().toString(36).substring(2);
-}
-const initialTasks = [
-  {
-    id: generateID(),
-    taskName: "Reading",
-    duration: "30min",
-  },
-  {
-    id: generateID(),
-    taskName: "Capstone Project",
-    duration: "6h",
-  },
-  {
-    id: generateID(),
-    taskName: "Pilates",
-    duration: "45min",
-  },
-  {
-    id: generateID(),
-    taskName: "Cleaning room",
-    duration: "10min",
-  },
-  {
-    id: generateID(),
-    taskName: "Update CV",
-    duration: "1h",
-  },
-];
+export default function Task({ task, handleToggleTask }) {
+  const tasks = task.filter((item) => !item.checked);
 
-export default function Task() {
   return (
     <TaskContainer>
-      <TaskTitle>Ongoing Tasks</TaskTitle>
+      <TaskTitle>Tasks Ongoing</TaskTitle>
       <ul>
-        {initialTasks.map((item) => (
+        {tasks.map(({ id, taskName, checked, duration }) => (
           <TaskItem
-            key={item.id}
-            taskName={item.taskName}
-            duration={item.duration}
+            key={id}
+            id={id}
+            taskName={taskName}
+            duration={duration}
+            checked={checked}
+            handleToggleTask={handleToggleTask}
           />
         ))}
       </ul>
     </TaskContainer>
   );
 }
-const TaskContainer = styled.div`
+
+export const TaskContainer = styled.div`
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   grid-column: 2 / span 1;
-  grid-row: 5 / span 1;
+  grid-row: 7 / span 1;
   padding-bottom: 0.6rem;
   padding-left: 1rem;
   padding-top: 1rem;
 `;
 
-const TaskTitle = styled.li`
+export const TaskTitle = styled.li`
   font-family: var(--font-primary);
   font-style: normal;
   font-weight: 400;
