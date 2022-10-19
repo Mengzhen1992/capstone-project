@@ -2,10 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import TaskItem from "./TaskItem";
 import addButton from "../public/images/addButton.svg";
+import addButtonHover from "../public/images/addButtonHover.svg";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Task({ task, handleToggleTask }) {
   const tasks = task.filter((item) => !item.checked);
+  const [hover, setHover] = useState(false);
 
   return (
     <TaskContainer>
@@ -22,8 +25,15 @@ export default function Task({ task, handleToggleTask }) {
           />
         ))}
       </ul>
-      <AddButton>
-        <Image src={addButton} alt="add button for create a new task" />
+      <AddButton
+        onMouseOver={() => setHover(!hover)}
+        onMouseOut={() => setHover(!hover)}
+      >
+        {!hover ? (
+          <Image src={addButton} alt="add button for create a new task" />
+        ) : (
+          <Image src={addButtonHover} alt="add button hover effect" />
+        )}
       </AddButton>
     </TaskContainer>
   );
@@ -56,4 +66,7 @@ const AddButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
+  &:hover {
+    background-image: url(/images/addButtonClicked.svg);
+  }
 `;
