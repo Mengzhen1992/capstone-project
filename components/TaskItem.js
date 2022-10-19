@@ -2,7 +2,6 @@ import styled from "styled-components";
 import uncheckButton from "../public/images/uncheck.svg";
 import checkedButton from "../public/images/checked.svg";
 import Image from "next/image";
-import { useState } from "react";
 
 const TaskItem = ({ id, taskName, duration, checked, handleToggleTask }) => {
   return (

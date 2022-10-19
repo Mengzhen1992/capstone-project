@@ -93,7 +93,7 @@ const Wrap = styled.div`
 const WrapMask = styled.div`
   display: grid;
   grid-template-columns: 1.5rem auto 1.5rem;
-  grid-template-rows: 2rem 2.5rem 1.5rem 1rem auto 2rem 1fr 8rem;
+  grid-template-rows: 2rem 2.5rem 1.5rem 1rem auto 2rem auto 8rem;
   width: 100vw;
   min-height: 100vh;
   background: rgba(253, 231, 190, 0.4);
