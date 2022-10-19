@@ -27,6 +27,7 @@ export default function Home() {
         <Welcome />
         <DateStyle>{getCurrentDate()}</DateStyle>
         <Task />
+        <Task />
       </WrapMask>
     </Wrap>
   );

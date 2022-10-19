@@ -1,12 +1,19 @@
 import styled from "styled-components";
 import uncheckButton from "../public/images/uncheck.svg";
+import checkedButton from "../public/images/checked.svg";
 import Image from "next/image";
+import { useState } from "react";
 
 const TaskItem = ({ taskName, duration }) => {
+  const [checkStatus, setCheckStatus] = useState(false);
   return (
     <Item>
-      <ImageContainer>
-        <Image src={uncheckButton} alt="uncheck button of a task item" />
+      <ImageContainer onClick={() => setCheckStatus(!checkStatus)}>
+        {!checkStatus ? (
+          <Image src={uncheckButton} alt="uncheck button of a task item" />
+        ) : (
+          <Image src={checkedButton} alt="checked button of a task item" />
+        )}
       </ImageContainer>
       <TaskName>{taskName}</TaskName>
       <TaskDuration>{duration}</TaskDuration>
@@ -27,10 +34,13 @@ const Item = styled.li`
   padding-bottom: 0.8rem;
 `;
 
-const ImageContainer = styled.div`
+const ImageContainer = styled.button`
   position: absolute;
   left: 1.5rem;
   top: 1.5rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 `;
 
 const TaskName = styled.p`
