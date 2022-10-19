@@ -5,6 +5,8 @@ export default function Welcome() {
 }
 
 const WelcomeText = styled.h2`
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 1;
   font-family: var(--font-primary);
   font-style: normal;
   font-weight: 900;

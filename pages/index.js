@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import DateDisplay from "../components/DateDisplay";
+import DateStyle from "../components/DateStyle";
 import Task from "../components/Task";
 import Welcome from "../components/Welcome";
 
@@ -24,12 +24,8 @@ export default function Home() {
   return (
     <Wrap>
       <WrapMask>
-        <WelcomeStyle>
-          <Welcome />
-        </WelcomeStyle>
-        <DateDisplayStyle>
-          <DateDisplay date={getCurrentDate()} />
-        </DateDisplayStyle>
+        <Welcome />
+        <DateStyle>{getCurrentDate()}</DateStyle>
         <Task />
       </WrapMask>
     </Wrap>
@@ -51,14 +47,4 @@ const WrapMask = styled.div`
   min-height: 100vh;
   background: rgba(253, 231, 190, 0.4);
   backdrop-filter: blur(40px);
-`;
-
-const WelcomeStyle = styled.div`
-  grid-column: 2 / span 1;
-  grid-row: 2 / span 1;
-`;
-
-const DateDisplayStyle = styled.div`
-  grid-column: 2 / span 1;
-  grid-row: 3 / span 1;
 `;
