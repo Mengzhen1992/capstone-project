@@ -5,10 +5,12 @@ import addButton from "../public/images/addButton.svg";
 import addButtonHover from "../public/images/addButtonHover.svg";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function Task({ task, handleToggleTask }) {
   const tasks = task.filter((item) => !item.checked);
   const [hover, setHover] = useState(false);
+  const router = useRouter();
 
   return (
     <TaskContainer>
@@ -28,6 +30,9 @@ export default function Task({ task, handleToggleTask }) {
       <AddButton
         onMouseOver={() => setHover(!hover)}
         onMouseOut={() => setHover(!hover)}
+        onClick={() => {
+          router.push("/create");
+        }}
       >
         {!hover ? (
           <Image src={addButton} alt="add button for create a new task" />

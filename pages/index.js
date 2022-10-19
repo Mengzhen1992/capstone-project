@@ -83,7 +83,7 @@ export default function Home() {
   );
 }
 
-const Wrap = styled.div`
+export const Wrap = styled.div`
   width: 100vw;
   min-height: 100vh;
   background: url(/images/bgImage.png);
