@@ -4,6 +4,7 @@ import Task from "../components/Task";
 import TaskCompleted from "../components/TaskCompleted";
 import Welcome from "../components/Welcome";
 import { useState } from "react";
+import Create from "../components/create";
 
 const initialTasks = [
   {
@@ -44,6 +45,7 @@ function generateID() {
 
 export default function Home() {
   const [task, setTask] = useState(initialTasks);
+  const [page, setPage] = useState("home");
 
   function getCurrentDate() {
     const date = new Date();
@@ -71,30 +73,44 @@ export default function Home() {
     setTask(updatedTaskList);
   }
 
-  function appendTask(title, duration) {
+  function appendTask(title, durationHour, durationMinute) {
+    const durationHourInput = durationHour === "0" ? "" : durationHour + "h";
+    const durationMinuteInput =
+      durationMinute === "0" ? "" : durationMinute + "min";
     const newTasks = [
       ...task,
       {
         id: generateID(),
         taskName: title,
-        duration: duration,
+        duration: durationHourInput + durationMinuteInput,
         checked: false,
       },
     ];
     setTask(newTasks);
   }
 
-  return (
-    <Wrap>
-      <WrapMask>
+  function HomePage() {
+    return (
+      <>
         <Welcome />
         <DateStyle>{getCurrentDate()}</DateStyle>
         <TaskCompleted task={task} handleToggleTask={handleToggleTask} />
         <Task
           task={task}
           handleToggleTask={handleToggleTask}
-          appendTask={appendTask}
+          setPage={setPage}
         />
+      </>
+    );
+  }
+
+  return (
+    <Wrap>
+      <WrapMask>
+        {page === "home" && <HomePage />}
+        {page === "create" && (
+          <Create appendTask={appendTask} setPage={setPage} />
+        )}
       </WrapMask>
     </Wrap>
   );

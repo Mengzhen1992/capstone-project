@@ -8,7 +8,7 @@ export default function TaskCompleted({ task, handleToggleTask }) {
   const tasksAmountTotal = task.length;
   const tasksAmountCompleted = task.filter((item) => item.checked).length;
   const completedPercent =
-    (tasksAmountCompleted / tasksAmountTotal) * 100 + "%";
+    Math.round((tasksAmountCompleted / tasksAmountTotal) * 100) + "%";
 
   return (
     <TaskCompletedContainer>

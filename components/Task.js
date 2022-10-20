@@ -5,12 +5,10 @@ import addButton from "../public/images/addButton.svg";
 import addButtonHover from "../public/images/addButtonHover.svg";
 import Image from "next/image";
 import { useState } from "react";
-import { useRouter } from "next/router";
 
-export default function Task({ task, handleToggleTask, appendTask }) {
+export default function Task({ task, handleToggleTask, setPage }) {
   const tasks = task.filter((item) => !item.checked);
   const [hover, setHover] = useState(false);
-  const router = useRouter();
 
   return (
     <TaskContainer>
@@ -31,10 +29,7 @@ export default function Task({ task, handleToggleTask, appendTask }) {
         onMouseOver={() => setHover(!hover)}
         onMouseOut={() => setHover(!hover)}
         onClick={() => {
-          router.push({
-            pathname: "/create",
-            query: appendTask,
-          });
+          setPage("create");
         }}
       >
         {!hover ? (
@@ -54,7 +49,7 @@ export const TaskContainer = styled.div`
   border-radius: 8px;
   grid-column: 2 / span 1;
   grid-row: 7 / span 1;
-  padding-bottom: 0.6rem;
+  padding-bottom: 2rem;
   padding-left: 1rem;
   padding-top: 1rem;
 `;
