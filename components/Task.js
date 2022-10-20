@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-export default function Task({ task, handleToggleTask }) {
+export default function Task({ task, handleToggleTask, appendTask }) {
   const tasks = task.filter((item) => !item.checked);
   const [hover, setHover] = useState(false);
   const router = useRouter();
@@ -31,7 +31,10 @@ export default function Task({ task, handleToggleTask }) {
         onMouseOver={() => setHover(!hover)}
         onMouseOut={() => setHover(!hover)}
         onClick={() => {
-          router.push("/create");
+          router.push({
+            pathname: "/create",
+            query: appendTask,
+          });
         }}
       >
         {!hover ? (

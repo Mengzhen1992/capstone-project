@@ -71,13 +71,30 @@ export default function Home() {
     setTask(updatedTaskList);
   }
 
+  function appendTask(title, duration) {
+    const newTasks = [
+      ...task,
+      {
+        id: generateID(),
+        taskName: title,
+        duration: duration,
+        checked: false,
+      },
+    ];
+    setTask(newTasks);
+  }
+
   return (
     <Wrap>
       <WrapMask>
         <Welcome />
         <DateStyle>{getCurrentDate()}</DateStyle>
         <TaskCompleted task={task} handleToggleTask={handleToggleTask} />
-        <Task task={task} handleToggleTask={handleToggleTask} />
+        <Task
+          task={task}
+          handleToggleTask={handleToggleTask}
+          appendTask={appendTask}
+        />
       </WrapMask>
     </Wrap>
   );

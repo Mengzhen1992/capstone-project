@@ -1,64 +1,68 @@
-import clock from "../public/images/clock.svg";
-import calendar from "../public/images/calendar.svg";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { Wrap, WrapMask } from ".";
 import styled from "styled-components";
+import { Wrap } from ".";
+import { useRouter } from "next/router";
 
-export default function Create() {
+export default function Create({ appendTask }) {
   const router = useRouter();
+  console.log("appendTask: ", appendTask);
+  function sendForm(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const { title, date, startTime, durationHour, durationMinute } =
+      Object.fromEntries(formData);
+    appendTask(title, duration);
+  }
   return (
     <Wrap>
       <FormWrapMask>
         <FormContainer>
           <FormTitle>Create New Task</FormTitle>
-          <Form>
-            <label for="task-title">Title</label>
-            <input
-              type="text"
-              name="title"
-              id="task-title"
-              placeholder="Your task name"
+          <form onSubmit={sendForm}>
+            <Label htmlFor="title">Title</Label>
+            <Input type="text" name="title" id="title" required />
+            <Label htmlFor="date">Date</Label>
+            <Input type="date" name="date" id="date" required />
+            <Label htmlFor="startTime">Start Time</Label>
+            <Input
+              type="time"
+              name="startTime"
+              id="startTime"
+              min="00:00"
+              max="24:00"
               required
             />
-            <label for="task-date">Date</label>
-            <div>
-              <input type="date" name="date" id="task-date" required />
-              <Image
-                src={calendar}
-                alt="calendar item for choosing a date"
-              ></Image>
-            </div>
-            <label for="task-start-time">Start Time</label>
-            <div>
-              <input
-                type="date"
-                name="start-time"
-                id="task-start-time"
+            <Label htmlFor="duration">Duration</Label>
+            <InputWrap>
+              <DurationInput
+                type="number"
+                name="durationHour"
+                id="duration"
+                min={0}
+                max={24}
+                title="give a number between 0 and 24"
                 required
               />
-              <Image
-                src={calendar}
-                alt="calendar item for choosing a start time"
-              ></Image>
-            </div>
-            <label for="task-duration">Duration</label>
-            <div>
-              <input type="date" name="duration" id="task-duration" required />
-              <Image
-                src={clock}
-                alt="clock item for choosing a duration"
-              ></Image>
-            </div>
-          </Form>
-          <CreateButton>Create</CreateButton>
-          <CancelButton
-            onClick={() => {
-              router.push("/");
-            }}
-          >
-            Cancel
-          </CancelButton>
+              <Text>h</Text>
+              <DurationInput
+                type="number"
+                name="durationMinute"
+                id="duration"
+                min={0}
+                max={60}
+                title="give a number between 0 and 60"
+                required
+              />
+              <Text>min</Text>
+            </InputWrap>
+            <Button type="submit">Create</Button>
+            <Button
+              onClick={() => {
+                router.push("/");
+              }}
+            >
+              Cancel
+            </Button>
+          </form>
         </FormContainer>
       </FormWrapMask>
     </Wrap>
@@ -67,7 +71,7 @@ export default function Create() {
 
 const FormWrapMask = styled.div`
   display: grid;
-  grid-template-columns: 1.5rem auto 1.5rem;
+  grid-template-columns: 1.5rem 1fr 1.5rem;
   grid-template-rows: 8rem auto 12rem;
   width: 100vw;
   min-height: 100vh;
@@ -76,36 +80,85 @@ const FormWrapMask = styled.div`
 `;
 
 const FormContainer = styled.main`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(6, 1fr);
-  gap: 1.5rem;
+  display: flex;
+  flex-flow: column wrap;
+  gap: 0.5rem;
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   grid-column: 2 / span 1;
   grid-row: 2 / span 1;
-  padding-bottom: 0.6rem;
-  padding-left: 1rem;
-  padding-top: 1rem;
+  padding: 1.5rem 1rem 0.6rem 1rem;
 `;
 
 const FormTitle = styled.h2`
-  grid-column: 2 / span 2;
-  grid-row: 1 / span 1;
+  font-family: var(--font-primary);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.5rem;
+  align-self: center;
 `;
 
-const Form = styled.form`
-  grid-column: 1 / span 4;
-  grid-row: 2 / span 3;
+const InputWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
-const CreateButton = styled.button`
-  grid-column: 2 / span 2;
-  grid-row: 5 / span 1;
+const Label = styled.label`
+  display: block;
+  font-size: 1.2rem;
+  padding-bottom: 0.3rem;
+  padding-top: 0.8rem;
 `;
 
-const CancelButton = styled.button`
-  grid-column: 2 / span 2;
-  grid-row: 6 / span 1;
+const Input = styled.input`
+  align-self: center;
+  border: 0;
+  width: 100%;
+  height: 2rem;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(30px);
+  border-radius: 5px;
+  font-family: var(--font-primary);
+  font-size: 1.2rem;
+`;
+
+const DurationInput = styled.input`
+  border: 0;
+  width: 28%;
+  height: 2rem;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(30px);
+  border-radius: 5px;
+  font-family: var(--font-primary);
+  font-size: 1.2rem;
+`;
+const Text = styled.p`
+  width: 18%;
+  height: 2rem;
+  text-align: center;
+  line-height: 2rem;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(30px);
+  border-radius: 5px;
+  font-family: var(--font-primary);
+  font-size: 1.2rem;
+`;
+
+const Button = styled.button`
+  display: block;
+  background: rgba(223, 30, 123, 0.59);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(30px);
+  border-radius: 12px;
+  width: 8rem;
+  height: 2.5rem;
+  font-family: var(--font-primary);
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 2rem auto 1rem auto;
+  cursor: pointer;
 `;
