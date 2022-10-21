@@ -1,68 +1,66 @@
 import styled from "styled-components";
-import { Wrap } from "../pages";
 import { useRouter } from "next/router";
+import LayoutSytle from "../components/LayoutStyle";
 
-export default function Create({ appendTask, setPage }) {
+export default function Create({ appendTask }) {
+  const router = useRouter();
   function sendForm(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const { title, date, startTime, durationHour, durationMinute } =
       Object.fromEntries(formData);
     appendTask(title, durationHour, durationMinute);
-    setPage("home");
   }
   return (
-    <FormWrapMask>
-      <FormContainer>
-        <FormTitle>Create New Task</FormTitle>
-        <form onSubmit={sendForm}>
-          <Label htmlFor="title">Title</Label>
-          <Input type="text" name="title" id="title" required />
-          <Label htmlFor="date">Date</Label>
-          <Input type="date" name="date" id="date" required />
-          <Label htmlFor="startTime">Start Time</Label>
-          <Input
-            type="time"
-            name="startTime"
-            id="startTime"
-            min="00:00"
-            max="24:00"
-            required
-          />
-          <Label htmlFor="duration">Duration</Label>
-          <InputWrap>
-            <DurationInput
-              type="number"
-              name="durationHour"
-              id="duration"
-              min={0}
-              max={24}
-              title="give a number between 0 and 24"
+    <LayoutSytle>
+      <FormWrapMask>
+        <FormContainer>
+          <FormTitle>Create New Task</FormTitle>
+          <form onSubmit={sendForm}>
+            <Label htmlFor="title">Title</Label>
+            <Input type="text" name="title" id="title" required />
+            <Label htmlFor="date">Date</Label>
+            <Input type="date" name="date" id="date" required />
+            <Label htmlFor="startTime">Start Time</Label>
+            <Input
+              type="time"
+              name="startTime"
+              id="startTime"
+              min="00:00"
+              max="24:00"
               required
             />
-            <Text>h</Text>
-            <DurationInput
-              type="number"
-              name="durationMinute"
-              id="duration"
-              min={0}
-              max={60}
-              title="give a number between 0 and 60"
-              required
-            />
-            <Text>min</Text>
-          </InputWrap>
-          <Button type="submit">Create</Button>
-          <Button
-            onClick={() => {
-              setPage("home");
-            }}
-          >
-            Cancel
-          </Button>
-        </form>
-      </FormContainer>
-    </FormWrapMask>
+            <Label htmlFor="duration">Duration</Label>
+            <InputWrap>
+              <DurationInput
+                type="number"
+                name="durationHour"
+                id="duration"
+                min={0}
+                max={24}
+                title="give a number between 0 and 24"
+                required
+              />
+              <Text>h</Text>
+              <DurationInput
+                type="number"
+                name="durationMinute"
+                id="duration"
+                min={0}
+                max={60}
+                title="give a number between 0 and 60"
+                required
+              />
+              <Text>min</Text>
+            </InputWrap>
+            <Button type="submit" onClick={() => router.push("/")}>
+              Create
+            </Button>
+            <Button onClick={() => router.push("/")}>Cancel</Button>
+          </form>
+        </FormContainer>
+      </FormWrapMask>
+    </LayoutSytle>
   );
 }
 

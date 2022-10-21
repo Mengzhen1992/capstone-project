@@ -3,9 +3,11 @@ import styled from "styled-components";
 import TaskItem from "./TaskItem";
 import addButton from "../public/images/addButton.svg";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
-export default function TaskOngoing({ task, handleToggleTask, setPage }) {
-  const tasks = task.filter((item) => !item.checked);
+export default function TaskOngoing({ items, handleToggleTask }) {
+  const tasks = items.filter((item) => !item.checked);
+  const router = useRouter();
 
   return (
     <TaskContainer>
@@ -22,11 +24,7 @@ export default function TaskOngoing({ task, handleToggleTask, setPage }) {
           />
         ))}
       </ul>
-      <AddButton
-        onClick={() => {
-          setPage("create");
-        }}
-      >
+      <AddButton onClick={() => router.push("/create")}>
         <Image src={addButton} alt="add button for create a new task" />
       </AddButton>
     </TaskContainer>
