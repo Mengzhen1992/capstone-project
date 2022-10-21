@@ -78,13 +78,13 @@ export default function Home() {
     const durationMinuteInput =
       durationMinute === "0" ? "" : durationMinute + "min";
     const newTasks = [
-      ...task,
       {
         id: generateID(),
         taskName: title,
         duration: durationHourInput + durationMinuteInput,
         checked: false,
       },
+      ...task,
     ];
     setTask(newTasks);
   }

@@ -3,9 +3,7 @@ import { Wrap } from "../pages";
 import { useRouter } from "next/router";
 
 export default function Create({ appendTask, setPage }) {
-  console.log("appendTask: ", appendTask);
   function sendForm(event) {
-    console.log("send Form");
     event.preventDefault();
     const formData = new FormData(event.target);
     const { title, date, startTime, durationHour, durationMinute } =
@@ -69,9 +67,6 @@ export default function Create({ appendTask, setPage }) {
 }
 
 const FormWrapMask = styled.div`
-  display: grid;
-  grid-template-columns: 1.5rem 1fr 1.5rem;
-  grid-template-rows: 8rem auto 12rem;
   width: 100vw;
   min-height: 100vh;
 `;
@@ -83,8 +78,7 @@ const FormContainer = styled.main`
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  grid-column: 2 / span 1;
-  grid-row: 2 / span 1;
+  margin: 8rem 1.5rem 12rem 1.5rem;
   padding: 1.5rem 1rem 0.6rem 1rem;
 `;
 

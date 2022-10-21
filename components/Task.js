@@ -2,13 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import TaskItem from "./TaskItem";
 import addButton from "../public/images/addButton.svg";
-import addButtonHover from "../public/images/addButtonHover.svg";
 import Image from "next/image";
-import { useState } from "react";
 
 export default function Task({ task, handleToggleTask, setPage }) {
   const tasks = task.filter((item) => !item.checked);
-  const [hover, setHover] = useState(false);
 
   return (
     <TaskContainer>
@@ -26,17 +23,13 @@ export default function Task({ task, handleToggleTask, setPage }) {
         ))}
       </ul>
       <AddButton
-        onMouseOver={() => setHover(!hover)}
-        onMouseOut={() => setHover(!hover)}
+        /* onMouseOver={() => setHover(!hover)}
+        onMouseOut={() => setHover(!hover)} */
         onClick={() => {
           setPage("create");
         }}
       >
-        {!hover ? (
-          <Image src={addButton} alt="add button for create a new task" />
-        ) : (
-          <Image src={addButtonHover} alt="add button hover effect" />
-        )}
+        <Image src={addButton} alt="add button for create a new task" />
       </AddButton>
     </TaskContainer>
   );
@@ -62,14 +55,16 @@ export const TaskTitle = styled.h3`
 `;
 
 const AddButton = styled.button`
+  overflow: hidden;
   position: absolute;
   left: 50%;
   margin-left: -55.5px;
   bottom: 4.05rem;
+  background: url(/images/addButton.svg) no-repeat;
   border: none;
   background-color: transparent;
   cursor: pointer;
   &:hover {
-    background-image: url(/images/addButtonClicked.svg);
+    transform: scale(1.2);
   }
 `;
