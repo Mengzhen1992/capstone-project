@@ -1,4 +1,4 @@
-import { TaskTitle } from "./Task";
+import { TaskTitle } from "./TaskOngoing";
 import TaskItem from "./TaskItem";
 import styled from "styled-components";
 

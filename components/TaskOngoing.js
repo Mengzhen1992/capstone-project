@@ -4,7 +4,7 @@ import TaskItem from "./TaskItem";
 import addButton from "../public/images/addButton.svg";
 import Image from "next/image";
 
-export default function Task({ task, handleToggleTask, setPage }) {
+export default function TaskOngoing({ task, handleToggleTask, setPage }) {
   const tasks = task.filter((item) => !item.checked);
 
   return (
@@ -23,8 +23,6 @@ export default function Task({ task, handleToggleTask, setPage }) {
         ))}
       </ul>
       <AddButton
-        /* onMouseOver={() => setHover(!hover)}
-        onMouseOut={() => setHover(!hover)} */
         onClick={() => {
           setPage("create");
         }}

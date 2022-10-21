@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import DateStyle from "../components/DateStyle";
-import Task from "../components/Task";
 import TaskCompleted from "../components/TaskCompleted";
 import Welcome from "../components/Welcome";
 import { useState } from "react";
 import Create from "../components/create";
+import TaskOngoing from "../components/TaskOngoing";
 
 const initialTasks = [
   {
@@ -95,7 +95,7 @@ export default function Home() {
         <Welcome />
         <DateStyle>{getCurrentDate()}</DateStyle>
         <TaskCompleted task={task} handleToggleTask={handleToggleTask} />
-        <Task
+        <TaskOngoing
           task={task}
           handleToggleTask={handleToggleTask}
           setPage={setPage}
