@@ -10,6 +10,7 @@ export default function Create({ appendTask }) {
     const { title, date, startTime, durationHour, durationMinute } =
       Object.fromEntries(formData);
     appendTask(title, durationHour, durationMinute);
+    router.push("/");
   }
   return (
     <LayoutSytle>
@@ -53,9 +54,7 @@ export default function Create({ appendTask }) {
               />
               <Text>min</Text>
             </InputWrap>
-            <Button type="submit" onClick={() => router.push("/")}>
-              Create
-            </Button>
+            <Button type="submit">Create</Button>
             <Button onClick={() => router.push("/")}>Cancel</Button>
           </form>
         </FormContainer>
