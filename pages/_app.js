@@ -57,8 +57,6 @@ function MyApp({ Component, pageProps }) {
     setTask(newTasks);
   }
 
-  console.log("task ", task);
-
   return (
     <>
       <GlobalStyle />
