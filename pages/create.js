@@ -1,26 +1,47 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutSytle from "../components/LayoutStyle";
+import { useState } from "react";
 
-export default function Create({ appendTask }) {
+export default function Create({ appendTask, getCurrentDate }) {
   const router = useRouter();
   function sendForm(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const { title, date, startTime, durationHour, durationMinute } =
       Object.fromEntries(formData);
+    /* // another way to remove white space
+    if (title.trim() === "") {
+      alert("the name cannot bu empty!");
+      return;
+    } */
     appendTask(title, durationHour, durationMinute);
     router.push("/");
   }
+
   return (
     <LayoutSytle>
       <FormContainer>
         <FormTitle>Create New Task</FormTitle>
         <form onSubmit={sendForm}>
           <Label htmlFor="title">Title</Label>
-          <Input type="text" name="title" id="title" required />
+          <Input
+            type="text"
+            name="title"
+            id="title"
+            pattern="^(?!\s)[a-zA-Z ]{1,}$"
+            title="the name cannot be empty!"
+            required
+          />
           <Label htmlFor="date">Date</Label>
-          <Input type="date" name="date" id="date" required />
+          <Input
+            type="date"
+            name="date"
+            id="date"
+            title="give a task name"
+            min={getCurrentDate().replaceAll(".", "-").slice(0, 10)}
+            required
+          />
           <Label htmlFor="startTime">Start Time</Label>
           <Input
             type="time"
