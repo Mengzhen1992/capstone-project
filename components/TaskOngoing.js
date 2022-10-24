@@ -5,15 +5,15 @@ import addButton from "../public/images/addButton.svg";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export default function TaskOngoing({ items, handleToggleTask }) {
-  const tasks = items.filter((item) => !item.checked);
+export default function TaskOngoing({ tasks, handleToggleTask }) {
+  const tasksOngoing = tasks.filter((task) => !task.checked);
   const router = useRouter();
 
   return (
     <TaskContainer>
       <TaskTitle>Tasks Ongoing</TaskTitle>
       <ul>
-        {tasks.map(({ id, taskName, checked, duration }) => (
+        {tasksOngoing.map(({ id, taskName, checked, duration }) => (
           <TaskItem
             key={id}
             id={id}

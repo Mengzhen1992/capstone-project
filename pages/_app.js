@@ -39,7 +39,7 @@ function generateID() {
 }
 
 function MyApp({ Component, pageProps }) {
-  const [task, setTask] = useState(initialTasks);
+  const [tasks, setTasks] = useState(initialTasks);
 
   function appendTask(title, durationHour, durationMinute) {
     const durationHourInput = durationHour === "0" ? "" : durationHour + "h";
@@ -52,9 +52,9 @@ function MyApp({ Component, pageProps }) {
         duration: durationHourInput + durationMinuteInput,
         checked: false,
       },
-      ...task,
+      ...tasks,
     ];
-    setTask(newTasks);
+    setTasks(newTasks);
   }
 
   return (
@@ -62,9 +62,9 @@ function MyApp({ Component, pageProps }) {
       <GlobalStyle />
       <Component
         {...pageProps}
-        items={task}
+        tasks={tasks}
         appendTask={appendTask}
-        setTask={setTask}
+        setTasks={setTasks}
       />
     </>
   );

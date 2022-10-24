@@ -5,7 +5,7 @@ import Welcome from "../components/Welcome";
 import TaskOngoing from "../components/TaskOngoing";
 import LayoutSytle from "../components/LayoutStyle";
 
-export default function Home({ items, setTask }) {
+export default function Home({ tasks, setTasks }) {
   function getCurrentDate() {
     const date = new Date();
     const year = date.getFullYear();
@@ -25,20 +25,19 @@ export default function Home({ items, setTask }) {
   }
 
   function handleToggleTask(id) {
-    const updatedTaskList = items.map((item) => {
-      if (item.id === id) item.checked = !item.checked;
-      return item;
+    const updatedTaskList = tasks.map((task) => {
+      if (task.id === id) task.checked = !task.checked;
+      return task;
     });
-    setTask(updatedTaskList);
+    setTasks(updatedTaskList);
   }
 
   return (
     <LayoutSytle>
       <Welcome />
       <DateStyle>{getCurrentDate()}</DateStyle>
-      <TaskCompleted items={items} handleToggleTask={handleToggleTask} />
-      <TaskOngoing items={items} handleToggleTask={handleToggleTask} />
-      {/* <Create appendTask={appendTask} setPage={setPage} /> */}
+      <TaskCompleted tasks={tasks} handleToggleTask={handleToggleTask} />
+      <TaskOngoing tasks={tasks} handleToggleTask={handleToggleTask} />
     </LayoutSytle>
   );
 }

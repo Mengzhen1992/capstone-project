@@ -2,9 +2,9 @@ import { TaskTitle } from "./TaskOngoing";
 import TaskItem from "./TaskItem";
 import styled from "styled-components";
 
-export default function TaskCompleted({ items, handleToggleTask }) {
-  const tasksAmountTotal = items.length;
-  const tasksAmountCompleted = items.filter((item) => item.checked).length;
+export default function TaskCompleted({ tasks, handleToggleTask }) {
+  const tasksAmountTotal = tasks.length;
+  const tasksAmountCompleted = tasks.filter((task) => task.checked).length;
   const completedPercent =
     Math.round((tasksAmountCompleted / tasksAmountTotal) * 100) + "%";
 
@@ -17,15 +17,15 @@ export default function TaskCompleted({ items, handleToggleTask }) {
         <TaskPercent>{completedPercent}</TaskPercent>
       </TaskTextWrap>
       <ul>
-        {items
-          .filter((item) => item.checked)
-          .map((item) => (
+        {tasks
+          .filter((task) => task.checked)
+          .map((task) => (
             <TaskItem
-              key={item.id}
-              id={item.id}
-              taskName={item.taskName}
-              duration={item.duration}
-              checked={item.checked}
+              key={task.id}
+              id={task.id}
+              taskName={task.taskName}
+              duration={task.duration}
+              checked={task.checked}
               handleToggleTask={handleToggleTask}
             />
           ))}
