@@ -6,13 +6,13 @@ import Image from "next/image";
 const TaskItem = ({ id, taskName, duration, checked, handleToggleTask }) => {
   return (
     <Item>
-      <ImageContainer onClick={() => handleToggleTask(id)}>
+      <ImageCheckContainer onClick={() => handleToggleTask(id)}>
         {!checked ? (
           <Image src={uncheckButton} alt="uncheck button of a task item" />
         ) : (
           <Image src={checkedButton} alt="checked button of a task item" />
         )}
-      </ImageContainer>
+      </ImageCheckContainer>
       <TaskName>{taskName}</TaskName>
       <TaskDuration>{duration}</TaskDuration>
     </Item>
@@ -32,7 +32,7 @@ const Item = styled.li`
   padding-bottom: 0.8rem;
 `;
 
-const ImageContainer = styled.button`
+const ImageCheckContainer = styled.button`
   position: absolute;
   left: 1.5rem;
   top: 1.5rem;

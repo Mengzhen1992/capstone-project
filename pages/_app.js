@@ -41,10 +41,29 @@ function generateID() {
 function MyApp({ Component, pageProps }) {
   const [tasks, setTasks] = useState(initialTasks);
 
+  function getCurrentDate() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const dates = date.getDate();
+    const arr = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const day = date.getDay();
+    return year + "." + month + "." + dates + " " + arr[day];
+  }
+
   function appendTask(title, durationHour, durationMinute) {
-    const durationHourInput = durationHour === "0" ? "" : durationHour + "h";
+    const durationHourInput =
+      Number(durationHour) === 0 ? "" : Number(durationHour) + "h";
     const durationMinuteInput =
-      durationMinute === "0" ? "" : durationMinute + "min";
+      Number(durationMinute) === 0 ? "" : Number(durationMinute) + "min";
     const newTasks = [
       {
         id: generateID(),
@@ -65,6 +84,7 @@ function MyApp({ Component, pageProps }) {
         tasks={tasks}
         appendTask={appendTask}
         setTasks={setTasks}
+        getCurrentDate={getCurrentDate}
       />
     </>
   );
