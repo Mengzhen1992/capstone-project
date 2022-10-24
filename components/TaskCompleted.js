@@ -39,7 +39,7 @@ const TaskCompletedContainer = styled.div`
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   grid-column: 2 / span 1;
-  grid-row: 5 / span 1;
+  grid-row: 3 / span 1;
   padding-bottom: 0.6rem;
   padding-left: 1rem;
   padding-top: 1rem;

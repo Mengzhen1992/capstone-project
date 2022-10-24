@@ -69,8 +69,9 @@ const FormContainer = styled.main`
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   grid-column: 2 / span 1;
-  grid-row: 5 / span 1;
-  padding: 1.5rem 1rem 0.6rem 1rem;
+  grid-row: 3 / span 1;
+  padding: 2rem 1rem 0rem 1rem;
+  margin-top: -2rem;
 `;
 
 const FormTitle = styled.h2`
@@ -141,6 +142,6 @@ const Button = styled.button`
   font-family: var(--font-primary);
   font-size: 1.2rem;
   color: #fff;
-  margin: 2rem auto 1rem auto;
+  margin: 2rem auto 2rem auto;
   cursor: pointer;
 `;
