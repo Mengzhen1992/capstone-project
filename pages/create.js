@@ -144,4 +144,7 @@ const Button = styled.button`
   color: #fff;
   margin: 2rem auto 2rem auto;
   cursor: pointer;
+  &:hover {
+    background: rgba(223, 30, 123, 0.8);
+  }
 `;
