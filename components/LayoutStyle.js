@@ -18,7 +18,6 @@ export const Wrap = styled.div`
 export const WrapMask = styled.div`
   display: grid;
   grid-template-columns: 1.5rem auto 1.5rem;
-  /* grid-template-rows: 2rem 2.5rem 1.5rem 1rem auto 2rem auto 8rem; */
   grid-template-rows: 2rem 1rem auto auto;
   row-gap: 2rem;
   width: 100vw;

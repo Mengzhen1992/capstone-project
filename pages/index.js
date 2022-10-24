@@ -32,12 +32,25 @@ export default function Home({ tasks, setTasks }) {
     setTasks(updatedTaskList);
   }
 
+  function deleteTask(id) {
+    const updatedDeleteTaskList = tasks.filter((task) => task.id !== id);
+    setTasks(updatedDeleteTaskList);
+  }
+
   return (
     <LayoutSytle>
       <Welcome />
       <DateStyle>{getCurrentDate()}</DateStyle>
-      <TaskCompleted tasks={tasks} handleToggleTask={handleToggleTask} />
-      <TaskOngoing tasks={tasks} handleToggleTask={handleToggleTask} />
+      <TaskCompleted
+        tasks={tasks}
+        handleToggleTask={handleToggleTask}
+        deleteTask={deleteTask}
+      />
+      <TaskOngoing
+        tasks={tasks}
+        handleToggleTask={handleToggleTask}
+        deleteTask={deleteTask}
+      />
     </LayoutSytle>
   );
 }
