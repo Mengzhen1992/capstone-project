@@ -1,50 +1,11 @@
 import styled from "styled-components";
 import DateStyle from "../components/DateStyle";
-import Task from "../components/Task";
 import TaskCompleted from "../components/TaskCompleted";
 import Welcome from "../components/Welcome";
-import { useState } from "react";
+import TaskOngoing from "../components/TaskOngoing";
+import LayoutSytle from "../components/LayoutStyle";
 
-const initialTasks = [
-  {
-    id: generateID(),
-    taskName: "Reading",
-    duration: "30min",
-    checked: false,
-  },
-  {
-    id: generateID(),
-    taskName: "Capstone Project",
-    duration: "6h",
-    checked: false,
-  },
-  {
-    id: generateID(),
-    taskName: "Pilates",
-    duration: "45min",
-    checked: false,
-  },
-  {
-    id: generateID(),
-    taskName: "Cleaning room",
-    duration: "10min",
-    checked: false,
-  },
-  {
-    id: generateID(),
-    taskName: "Update CV",
-    duration: "1h",
-    checked: false,
-  },
-];
-
-function generateID() {
-  return Math.random().toString(36).substring(2);
-}
-
-export default function Home() {
-  const [task, setTask] = useState(initialTasks);
-
+export default function Home({ tasks, setTasks }) {
   function getCurrentDate() {
     const date = new Date();
     const year = date.getFullYear();
@@ -64,38 +25,19 @@ export default function Home() {
   }
 
   function handleToggleTask(id) {
-    const updatedTaskList = task.map((item) => {
-      if (item.id === id) item.checked = !item.checked;
-      return item;
+    const updatedTaskList = tasks.map((task) => {
+      if (task.id === id) task.checked = !task.checked;
+      return task;
     });
-    setTask(updatedTaskList);
+    setTasks(updatedTaskList);
   }
 
   return (
-    <Wrap>
-      <WrapMask>
-        <Welcome />
-        <DateStyle>{getCurrentDate()}</DateStyle>
-        <TaskCompleted task={task} handleToggleTask={handleToggleTask} />
-        <Task task={task} handleToggleTask={handleToggleTask} />
-      </WrapMask>
-    </Wrap>
+    <LayoutSytle>
+      <Welcome />
+      <DateStyle>{getCurrentDate()}</DateStyle>
+      <TaskCompleted tasks={tasks} handleToggleTask={handleToggleTask} />
+      <TaskOngoing tasks={tasks} handleToggleTask={handleToggleTask} />
+    </LayoutSytle>
   );
 }
-
-const Wrap = styled.div`
-  width: 100vw;
-  min-height: 100vh;
-  background: url(/images/bgImage.png);
-  backdrop-filter: blur(2px);
-`;
-
-const WrapMask = styled.div`
-  display: grid;
-  grid-template-columns: 1.5rem auto 1.5rem;
-  grid-template-rows: 2rem 2.5rem 1.5rem 1rem auto 2rem 1fr 8rem;
-  width: 100vw;
-  min-height: 100vh;
-  background: rgba(253, 231, 190, 0.4);
-  backdrop-filter: blur(40px);
-`;
