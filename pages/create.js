@@ -14,59 +14,52 @@ export default function Create({ appendTask }) {
   }
   return (
     <LayoutSytle>
-      <FormWrapMask>
-        <FormContainer>
-          <FormTitle>Create New Task</FormTitle>
-          <form onSubmit={sendForm}>
-            <Label htmlFor="title">Title</Label>
-            <Input type="text" name="title" id="title" required />
-            <Label htmlFor="date">Date</Label>
-            <Input type="date" name="date" id="date" required />
-            <Label htmlFor="startTime">Start Time</Label>
-            <Input
-              type="time"
-              name="startTime"
-              id="startTime"
-              min="00:00"
-              max="24:00"
+      <FormContainer>
+        <FormTitle>Create New Task</FormTitle>
+        <form onSubmit={sendForm}>
+          <Label htmlFor="title">Title</Label>
+          <Input type="text" name="title" id="title" required />
+          <Label htmlFor="date">Date</Label>
+          <Input type="date" name="date" id="date" required />
+          <Label htmlFor="startTime">Start Time</Label>
+          <Input
+            type="time"
+            name="startTime"
+            id="startTime"
+            min="00:00"
+            max="24:00"
+            required
+          />
+          <Label htmlFor="duration">Duration</Label>
+          <InputWrap>
+            <DurationInput
+              type="number"
+              name="durationHour"
+              id="duration"
+              min={0}
+              max={24}
+              title="give a number between 0 and 24"
               required
             />
-            <Label htmlFor="duration">Duration</Label>
-            <InputWrap>
-              <DurationInput
-                type="number"
-                name="durationHour"
-                id="duration"
-                min={0}
-                max={24}
-                title="give a number between 0 and 24"
-                required
-              />
-              <Text>h</Text>
-              <DurationInput
-                type="number"
-                name="durationMinute"
-                id="duration"
-                min={0}
-                max={60}
-                title="give a number between 0 and 60"
-                required
-              />
-              <Text>min</Text>
-            </InputWrap>
-            <Button type="submit">Create</Button>
-            <Button onClick={() => router.push("/")}>Cancel</Button>
-          </form>
-        </FormContainer>
-      </FormWrapMask>
+            <Text>h</Text>
+            <DurationInput
+              type="number"
+              name="durationMinute"
+              id="duration"
+              min={0}
+              max={60}
+              title="give a number between 0 and 60"
+              required
+            />
+            <Text>min</Text>
+          </InputWrap>
+          <Button type="submit">Create</Button>
+          <Button onClick={() => router.push("/")}>Cancel</Button>
+        </form>
+      </FormContainer>
     </LayoutSytle>
   );
 }
-
-const FormWrapMask = styled.div`
-  width: 100vw;
-  min-height: 100vh;
-`;
 
 const FormContainer = styled.main`
   display: flex;
@@ -75,7 +68,8 @@ const FormContainer = styled.main`
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  margin: 8rem 1.5rem 12rem 1.5rem;
+  grid-column: 2 / span 1;
+  grid-row: 5 / span 1;
   padding: 1.5rem 1rem 0.6rem 1rem;
 `;
 
