@@ -10,7 +10,7 @@ const TaskItem = ({
   duration,
   checked,
   handleToggleTask,
-  deleteTask,
+  handleDelete,
 }) => {
   return (
     <Item>
@@ -23,7 +23,7 @@ const TaskItem = ({
       </ImageCheckContainer>
       <TaskName>{taskName}</TaskName>
       <TaskDuration>{duration}</TaskDuration>
-      <ImageDeleteContainer onClick={() => deleteTask(id)}>
+      <ImageDeleteContainer onClick={() => handleDelete(id)}>
         <Image src={deleteButton} alt="delete button of a task item" />
       </ImageDeleteContainer>
     </Item>

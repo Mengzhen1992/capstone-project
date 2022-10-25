@@ -131,7 +131,7 @@ const Text = styled.p`
   font-size: 1.2rem;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   display: block;
   background: rgba(223, 30, 123, 0.59);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);

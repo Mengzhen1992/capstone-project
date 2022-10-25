@@ -4,8 +4,30 @@ import TaskCompleted from "../components/TaskCompleted";
 import Welcome from "../components/Welcome";
 import TaskOngoing from "../components/TaskOngoing";
 import LayoutSytle from "../components/LayoutStyle";
+import Popup from "../components/Popup";
+import { useState } from "react";
 
 export default function Home({ tasks, setTasks }) {
+  const [popup, setPopup] = useState({ show: false, id: null });
+  // this will show the confirmation box
+  function handleDelete(id) {
+    setPopup({ show: true, id });
+  }
+  // this will perform the deletion and hide the confirmation Box
+  function handleDeleteTrue() {
+    if (popup.show && popup.id) {
+      const updatedDeleteTaskList = tasks.filter(
+        (task) => task.id !== popup.id
+      );
+      setTasks(updatedDeleteTaskList);
+      setPopup({ show: false, id: null });
+    }
+  }
+  // this will just hide the confirmation box when user clicks "Cancel"
+  function handleDeleteFalse() {
+    setPopup({ show: false, id: null });
+  }
+
   function getCurrentDate() {
     const date = new Date();
     const year = date.getFullYear();
@@ -32,11 +54,6 @@ export default function Home({ tasks, setTasks }) {
     setTasks(updatedTaskList);
   }
 
-  function deleteTask(id) {
-    const updatedDeleteTaskList = tasks.filter((task) => task.id !== id);
-    setTasks(updatedDeleteTaskList);
-  }
-
   return (
     <LayoutSytle>
       <Welcome />
@@ -44,13 +61,19 @@ export default function Home({ tasks, setTasks }) {
       <TaskCompleted
         tasks={tasks}
         handleToggleTask={handleToggleTask}
-        deleteTask={deleteTask}
+        handleDelete={handleDelete}
       />
       <TaskOngoing
         tasks={tasks}
         handleToggleTask={handleToggleTask}
-        deleteTask={deleteTask}
+        handleDelete={handleDelete}
       />
+      {popup.show && (
+        <Popup
+          handleDeleteTrue={handleDeleteTrue}
+          handleDeleteFalse={handleDeleteFalse}
+        />
+      )}
     </LayoutSytle>
   );
 }
