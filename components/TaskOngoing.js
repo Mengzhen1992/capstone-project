@@ -5,7 +5,7 @@ import addButton from "../public/images/addButton.svg";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export default function TaskOngoing({ tasks, handleToggleTask }) {
+export default function TaskOngoing({ tasks, handleToggleTask, handleDelete }) {
   const tasksOngoing = tasks.filter((task) => !task.checked);
   const router = useRouter();
 
@@ -21,6 +21,7 @@ export default function TaskOngoing({ tasks, handleToggleTask }) {
             duration={duration}
             checked={checked}
             handleToggleTask={handleToggleTask}
+            handleDelete={handleDelete}
           />
         ))}
       </ul>
@@ -37,10 +38,11 @@ export const TaskContainer = styled.div`
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   grid-column: 2 / span 1;
-  grid-row: 7 / span 1;
+  grid-row: 4 / span 1;
   padding-bottom: 2rem;
   padding-left: 1rem;
   padding-top: 1rem;
+  margin-bottom: 4rem;
 `;
 
 export const TaskTitle = styled.h3`
@@ -51,11 +53,10 @@ export const TaskTitle = styled.h3`
 `;
 
 const AddButton = styled.button`
-  overflow: hidden;
   position: absolute;
   left: 50%;
   margin-left: -55.5px;
-  bottom: 4.05rem;
+  bottom: 0.1rem;
   background: url(/images/addButton.svg) no-repeat;
   border: none;
   background-color: transparent;
