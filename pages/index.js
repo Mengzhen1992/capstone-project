@@ -7,7 +7,7 @@ import LayoutSytle from "../components/LayoutStyle";
 import Popup from "../components/Popup";
 import { useState } from "react";
 
-export default function Home({ tasks, setTasks }) {
+export default function Home({ tasks, setTasks, getCurrentDate }) {
   const [popup, setPopup] = useState({ show: false, id: null });
   // this will show the confirmation box
   function handleDelete(id) {
@@ -26,24 +26,6 @@ export default function Home({ tasks, setTasks }) {
   // this will just hide the confirmation box when user clicks "Cancel"
   function handleDeleteFalse() {
     setPopup({ show: false, id: null });
-  }
-
-  function getCurrentDate() {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const dates = date.getDate();
-    const arr = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    const day = date.getDay();
-    return year + "." + month + "." + dates + " " + arr[day];
   }
 
   function handleToggleTask(id) {
