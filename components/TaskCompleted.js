@@ -2,11 +2,17 @@ import { TaskTitle } from "./TaskOngoing";
 import TaskItem from "./TaskItem";
 import styled from "styled-components";
 
-export default function TaskCompleted({ tasks, handleToggleTask }) {
+export default function TaskCompleted({
+  tasks,
+  handleToggleTask,
+  handleDelete,
+}) {
   const tasksAmountTotal = tasks.length;
   const tasksAmountCompleted = tasks.filter((task) => task.checked).length;
   const completedPercent =
-    Math.round((tasksAmountCompleted / tasksAmountTotal) * 100) + "%";
+    tasksAmountTotal === 0
+      ? "0%"
+      : Math.round((tasksAmountCompleted / tasksAmountTotal) * 100) + "%";
 
   return (
     <TaskCompletedContainer>
@@ -27,6 +33,7 @@ export default function TaskCompleted({ tasks, handleToggleTask }) {
               duration={task.duration}
               checked={task.checked}
               handleToggleTask={handleToggleTask}
+              handleDelete={handleDelete}
             />
           ))}
       </ul>
@@ -39,7 +46,7 @@ const TaskCompletedContainer = styled.div`
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   grid-column: 2 / span 1;
-  grid-row: 5 / span 1;
+  grid-row: 3 / span 1;
   padding-bottom: 0.6rem;
   padding-left: 1rem;
   padding-top: 1rem;

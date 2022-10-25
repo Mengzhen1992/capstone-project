@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutSytle from "../components/LayoutStyle";
-import { useState } from "react";
 
 export default function Create({ appendTask, getCurrentDate }) {
   const router = useRouter();
@@ -90,8 +89,9 @@ const FormContainer = styled.main`
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   grid-column: 2 / span 1;
-  grid-row: 5 / span 1;
-  padding: 1.5rem 1rem 0.6rem 1rem;
+  grid-row: 3 / span 1;
+  padding: 2rem 1rem 0rem 1rem;
+  margin-top: -2rem;
 `;
 
 const FormTitle = styled.h2`
@@ -151,7 +151,7 @@ const Text = styled.p`
   font-size: 1.2rem;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   display: block;
   background: rgba(223, 30, 123, 0.59);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
@@ -164,4 +164,7 @@ const Button = styled.button`
   color: #fff;
   margin: 2rem auto 1rem auto;
   cursor: pointer;
+  &:hover {
+    background: rgba(223, 30, 123, 0.8);
+  }
 `;
