@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { Button } from "../pages/create";
 
-export default function Popup({ handleDeleteTrue, handleDeleteFalse }) {
+export default function Popup({ onDelete, onCancelDelete }) {
   return (
     <Overlay>
       <PopupContainer>
-        <Text>this task will be deleted, are you sure?</Text>
-        <Button onClick={handleDeleteTrue}>Yes, delete it</Button>
-        <Button onClick={handleDeleteFalse}>Cancel</Button>
+        <h2>this task will be deleted, are you sure?</h2>
+        <Button onClick={onDelete}>Yes, delete it</Button>
+        <Button onClick={onCancelDelete}>Cancel</Button>
       </PopupContainer>
     </Overlay>
   );
@@ -35,10 +35,4 @@ const PopupContainer = styled.div`
   background: rgba(255, 255, 255, 0.8);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-`;
-
-const Text = styled.h2`
-  font-family: var(--font-primary);
-  font-style: normal;
-  font-size: 1.5rem;
 `;

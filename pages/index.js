@@ -13,7 +13,7 @@ export default function Home({ tasks, setTasks, getCurrentDate }) {
     setPopup({ show: true, id });
   }
   // this will perform the deletion and hide the confirmation Box
-  function handleDeleteTrue() {
+  function onDelete() {
     if (popup.show && popup.id) {
       const updatedDeleteTaskList = tasks.filter(
         (task) => task.id !== popup.id
@@ -23,7 +23,7 @@ export default function Home({ tasks, setTasks, getCurrentDate }) {
     }
   }
   // this will just hide the confirmation box when user clicks "Cancel"
-  function handleDeleteFalse() {
+  function onCancelDelete() {
     setPopup({ show: false, id: null });
   }
 
@@ -50,10 +50,7 @@ export default function Home({ tasks, setTasks, getCurrentDate }) {
         handleDelete={handleDelete}
       />
       {popup.show && (
-        <Popup
-          handleDeleteTrue={handleDeleteTrue}
-          handleDeleteFalse={handleDeleteFalse}
-        />
+        <Popup onDelete={onDelete} onCancelDelete={onCancelDelete} />
       )}
     </LayoutSytle>
   );
