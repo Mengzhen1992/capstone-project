@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Button } from "../pages/Create";
+import { Button } from "../pages/create";
 
 export default function Popup({ handleDeleteTrue, handleDeleteFalse }) {
   return (
