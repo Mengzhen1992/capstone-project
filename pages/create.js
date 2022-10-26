@@ -21,7 +21,7 @@ export default function Create({ appendTask, getCurrentDate }) {
   return (
     <LayoutSytle>
       <FormContainer>
-        <FormTitle>Create New Task</FormTitle>
+        <Title>Create New Task</Title>
         <form onSubmit={sendForm}>
           <Label htmlFor="title">Title</Label>
           <Input
@@ -94,7 +94,7 @@ const FormContainer = styled.main`
   margin-top: -2rem;
 `;
 
-const FormTitle = styled.h2`
+export const Title = styled.h2`
   font-family: var(--font-primary);
   font-style: normal;
   font-weight: 400;
