@@ -15,6 +15,13 @@ const TaskItem = ({
   handleDelete,
 }) => {
   const router = useRouter();
+  function durationDisplay() {
+    const hourDisplay = duration / 3600 < 1 ? "" : duration / 3600;
+    const minDisplay = duration % 3600 === 0 ? "" : duration / 60;
+    if (hourDisplay === "" && minDisplay === "") return "0min";
+    if (hourDisplay === "") return `${minDisplay}min`;
+    if (minDisplay === "") return `${hourDisplay}h`;
+  }
   return (
     <Item>
       <ImageCheckContainer onClick={() => handleToggleTask(id)}>
@@ -25,7 +32,7 @@ const TaskItem = ({
         )}
       </ImageCheckContainer>
       <TaskName>{taskName}</TaskName>
-      <TaskDuration>{duration}</TaskDuration>
+      <TaskDuration>{durationDisplay()}</TaskDuration>
       <ImagePlayContainer>
         {!checked ? (
           <Image

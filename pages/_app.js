@@ -5,31 +5,31 @@ const initialTasks = [
   {
     id: generateID(),
     taskName: "Reading",
-    duration: "30min",
+    duration: 1800,
     checked: false,
   },
   {
     id: generateID(),
     taskName: "Capstone Project",
-    duration: "6h",
+    duration: 21600,
     checked: false,
   },
   {
     id: generateID(),
     taskName: "Pilates",
-    duration: "45min",
+    duration: 2700,
     checked: false,
   },
   {
     id: generateID(),
     taskName: "Cleaning room",
-    duration: "10min",
+    duration: 600,
     checked: false,
   },
   {
     id: generateID(),
     taskName: "Update CV",
-    duration: "1h",
+    duration: 3600,
     checked: false,
   },
 ];
@@ -60,17 +60,11 @@ function MyApp({ Component, pageProps }) {
   }
 
   function appendTask(title, durationHour, durationMinute) {
-    const durationHourInput =
-      Number(durationHour) === 0 ? "" : Number(durationHour) + "h";
-    const durationMinuteInput =
-      Number(durationMinute) === 0 && Number(durationHour) !== 0
-        ? ""
-        : Number(durationMinute) + "min";
     const newTasks = [
       {
         id: generateID(),
         taskName: title,
-        duration: durationHourInput + durationMinuteInput,
+        duration: Number(durationHour) * 3600 + Number(durationMinute) * 60,
         checked: false,
       },
       ...tasks,

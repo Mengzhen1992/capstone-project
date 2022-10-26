@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import LayoutSytle from "../../components/LayoutStyle";
 
@@ -9,41 +9,44 @@ export default function Timer({ tasks }) {
 
   const { duration } = tasks.find((task) => task.id === id);
 
-  console.log("duration", duration);
-  let durationHour = 0;
-  if (duration.includes("h")) durationHour = duration.split("h")[0];
-  console.log("durationHour", durationHour);
-  let durationMinute = 0;
-  if (duration.includes("min")) durationMinute = duration.split("min")[0];
-  console.log("durationMinute", durationMinute);
-
-  const durationInSec =
-    Number(durationHour) * 60 * 60 + Number(durationMinute) * 60;
   const [durationClock, setDurationClock] = useState({
-    sec: durationInSec,
+    sec: duration,
     start: true,
   });
-  function displayDuration() {
-    const currentHour =
-      Math.floor(durationClock.sec / 3600) < 10
-        ? "0" + Math.floor(durationClock.sec / 3600)
-        : Math.floor(durationClock.sec / 3600);
-    const currentMin =
-      durationClock.sec % 3600 < 600
-        ? "0" + (durationClock.sec % 60) / 60
-        : durationClock.sec % 60;
-    return `${currentHour}:${currentMin}:00`;
-  }
+  const hour =
+    Math.floor(durationClock.sec / 3600) < 10
+      ? "0" + Math.floor(durationClock.sec / 3600)
+      : Math.floor(durationClock.sec / 3600);
+  const minutes =
+    durationClock.sec % 3600 === 0
+      ? "00"
+      : Math.floor(durationClock.sec / 3600) >= 1
+      ? Math.floor((durationClock.sec % 3600) / 60)
+      : Math.floor(durationClock.sec / 60) < 10
+      ? "0" + Math.floor(durationClock.sec / 60)
+      : Math.floor(durationClock.sec / 60);
+  const seconds =
+    durationClock.sec % 60 < 10
+      ? "0" + (durationClock.sec % 60)
+      : durationClock.sec % 60;
 
-  function handleTimer() {
-    setTimeout(() => {
-      setDurationClock({ sec: sec - 1, start: true });
-    }, 1000);
-  }
+  useEffect(() => {
+    let timer;
+    if (durationClock.sec > 0) {
+      timer = setInterval(() => {
+        setDurationClock((pre) => ({ sec: pre.sec - 1, start: pre.start }));
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(timer);
+    };
+  });
+
   return (
     <LayoutSytle>
       <TimerTitle>{taskName}</TimerTitle>
-      <TimerClock>{displayDuration()}</TimerClock>
+      <TimerClock>{`${hour}:${minutes}:${seconds}`}</TimerClock>
     </LayoutSytle>
   );
 }
