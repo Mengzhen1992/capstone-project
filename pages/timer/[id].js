@@ -5,9 +5,9 @@ import LayoutSytle from "../../components/LayoutStyle";
 
 export default function Timer({ tasks }) {
   const router = useRouter();
-  const { id } = router.query;
+  const { taskName, id } = router.query;
 
-  const { taskName, duration } = tasks.find((task) => task.id === id);
+  const { duration } = tasks.find((task) => task.id === id);
 
   console.log("duration", duration);
   let durationHour = 0;
