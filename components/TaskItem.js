@@ -4,6 +4,7 @@ import checkedButton from "../public/images/checked.svg";
 import deleteButton from "../public/images/deleteButton.svg";
 import playButton from "../public/images/playButton.svg";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const TaskItem = ({
   id,
@@ -13,6 +14,7 @@ const TaskItem = ({
   handleToggleTask,
   handleDelete,
 }) => {
+  const router = useRouter();
   return (
     <Item>
       <ImageCheckContainer onClick={() => handleToggleTask(id)}>
@@ -26,7 +28,11 @@ const TaskItem = ({
       <TaskDuration>{duration}</TaskDuration>
       <ImagePlayContainer>
         {!checked ? (
-          <Image src={playButton} alt="play button of a task item" />
+          <Image
+            src={playButton}
+            onClick={() => router.push("/timer")}
+            alt="play button of a task item"
+          />
         ) : null}
       </ImagePlayContainer>
       <ImageDeleteContainer onClick={() => handleDelete(id)}>

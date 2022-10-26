@@ -61,9 +61,7 @@ function MyApp({ Component, pageProps }) {
 
   function appendTask(title, durationHour, durationMinute) {
     const durationHourInput =
-      Number(durationHour) === 0 && Number(durationMinute) !== 0
-        ? ""
-        : Number(durationHour) + "h";
+      Number(durationHour) === 0 ? "" : Number(durationHour) + "h";
     const durationMinuteInput =
       Number(durationMinute) === 0 && Number(durationHour) !== 0
         ? ""
