@@ -2,6 +2,7 @@ import styled from "styled-components";
 import uncheckButton from "../public/images/uncheck.svg";
 import checkedButton from "../public/images/checked.svg";
 import deleteButton from "../public/images/deleteButton.svg";
+import playButton from "../public/images/playButton.svg";
 import Image from "next/image";
 
 const TaskItem = ({
@@ -23,6 +24,11 @@ const TaskItem = ({
       </ImageCheckContainer>
       <TaskName>{taskName}</TaskName>
       <TaskDuration>{duration}</TaskDuration>
+      <ImagePlayContainer>
+        {!checked ? (
+          <Image src={playButton} alt="play button of a task item" />
+        ) : null}
+      </ImagePlayContainer>
       <ImageDeleteContainer onClick={() => handleDelete(id)}>
         <Image src={deleteButton} alt="delete button of a task item" />
       </ImageDeleteContainer>
@@ -47,6 +53,15 @@ const ImageCheckContainer = styled.button`
   position: absolute;
   left: 1rem;
   top: 1.5rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+`;
+
+const ImagePlayContainer = styled.button`
+  position: absolute;
+  right: 3rem;
+  top: 1.3rem;
   border: none;
   background-color: transparent;
   cursor: pointer;
