@@ -7,7 +7,7 @@ export default function Popup({ onDelete, onCancelDelete }) {
     <Overlay>
       <PopupContainer>
         <h2>this task will be deleted, are you sure?</h2>
-        <Button onClick={onDelete}>Yes, delete it</Button>
+        <Button onClick={onDelete}>Yes, delete</Button>
         <Button onClick={onCancelDelete}>Cancel</Button>
       </PopupContainer>
     </Overlay>
