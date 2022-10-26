@@ -22,6 +22,11 @@ export default function TaskCompleted({
         </TaskTitle>
         <TaskPercent>{completedPercent}</TaskPercent>
       </TaskTextWrap>
+      <ProgressBarWrap>
+        <ProgressBarLine
+          style={{ width: `${completedPercent}` }}
+        ></ProgressBarLine>
+      </ProgressBarWrap>
       <ul>
         {tasks
           .filter((task) => task.checked)
@@ -64,4 +69,23 @@ const TaskPercent = styled.p`
   font-weight: 400;
   font-size: 1.2rem;
   color: #df1e7b;
+`;
+
+const ProgressBarWrap = styled.div`
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  margin: 1rem 0.8rem 1rem 0;
+`;
+
+const ProgressBarLine = styled.div`
+  background: linear-gradient(
+    90deg,
+    rgba(199, 66, 202, 0.348) 0%,
+    rgba(223, 30, 123, 0.4) 100%
+  );
+  backdrop-filter: blur(30px);
+  border-radius: 15px;
+  height: 20px;
+  transition: all 0.5s cubic-bezier(0, 0.64, 0.36, 1);
 `;
