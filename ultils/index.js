@@ -33,13 +33,9 @@ export function displayTime(seconds) {
 
   if (hour < 10) {
     hour = "0" + hour;
-  }
-
-  if (min < 10) {
+  } else if (min < 10) {
     min = "0" + min;
-  }
-
-  if (sec < 10) {
+  } else if (sec < 10) {
     sec = "0" + sec;
   }
 
