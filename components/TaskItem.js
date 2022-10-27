@@ -37,7 +37,9 @@ const TaskItem = ({
         {!checked ? (
           <Image
             src={playButton}
-            onClick={() => router.push(`/timer/${id}?taskName=${taskName}`)}
+            onClick={() =>
+              router.push(`/timer/${id}?taskName=${taskName}&sec=${duration}`)
+            }
             alt="play button of a task item"
           />
         ) : null}

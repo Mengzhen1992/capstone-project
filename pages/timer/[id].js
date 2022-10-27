@@ -2,60 +2,35 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import LayoutSytle from "../../components/LayoutStyle";
+import { displayTime } from "../../ultils";
 
-export default function Timer({ tasks }) {
+export default function Timer() {
   const router = useRouter();
-  const { id } = router.query;
-  const [durationClock, setDurationClock] = useState(null);
+  const { taskName, sec } = router.query;
+  const [timer, setTimer] = useState({ sec: sec, start: true });
 
   useEffect(() => {
-    setDurationClock({ sec: duration, start: true });
-  }, []);
+    setTimer({ sec: sec, start: true });
+  }, [sec]);
 
+  console.log("timer: ", timer);
+  console.log("sec", sec);
   useEffect(() => {
-    let timer;
-    if (durationClock !== null) {
-      timer = setInterval(() => {
-        if (durationClock.sec > 0) {
-          setDurationClock((pre) => ({ sec: pre.sec - 1, start: pre.start }));
-        }
-      }, 1000);
-    }
+    let interval = setInterval(() => {
+      if (timer.sec > 0) {
+        setTimer((pre) => ({ sec: pre.sec - 1, start: pre.start }));
+      }
+    }, 1000);
 
     return () => {
-      clearInterval(timer);
+      clearInterval(interval);
     };
-  }, [durationClock]);
-
-  const task = tasks.find((task) => task.id === id);
-
-  if (durationClock === null || task === undefined) return;
-  const { taskName, duration } = task;
-
-  function displayDuration() {
-    const hour =
-      Math.floor(durationClock.sec / 3600) < 10
-        ? "0" + Math.floor(durationClock.sec / 3600)
-        : Math.floor(durationClock.sec / 3600);
-    const minutes =
-      durationClock.sec % 3600 === 0
-        ? "00"
-        : Math.floor(durationClock.sec / 3600) >= 1
-        ? Math.floor((durationClock.sec % 3600) / 60)
-        : Math.floor(durationClock.sec / 60) < 10
-        ? "0" + Math.floor(durationClock.sec / 60)
-        : Math.floor(durationClock.sec / 60);
-    const seconds =
-      durationClock.sec % 60 < 10
-        ? "0" + (durationClock.sec % 60)
-        : durationClock.sec % 60;
-    return `${hour}:${minutes}:${seconds}`;
-  }
+  }, []);
 
   return (
     <LayoutSytle>
       <TimerTitle>{taskName}</TimerTitle>
-      <TimerClock>{displayDuration()}</TimerClock>
+      <TimerClock>{displayTime(timer.sec)}</TimerClock>
     </LayoutSytle>
   );
 }
