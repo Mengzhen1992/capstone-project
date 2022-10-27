@@ -6,47 +6,55 @@ import LayoutSytle from "../../components/LayoutStyle";
 export default function Timer({ tasks }) {
   const router = useRouter();
   const { id } = router.query;
+  const [durationClock, setDurationClock] = useState(null);
 
-  const { taskName, duration } = tasks.find((task) => task.id === id);
-
-  const [durationClock, setDurationClock] = useState({
-    sec: duration,
-    start: true,
-  });
-  const hour =
-    Math.floor(durationClock.sec / 3600) < 10
-      ? "0" + Math.floor(durationClock.sec / 3600)
-      : Math.floor(durationClock.sec / 3600);
-  const minutes =
-    durationClock.sec % 3600 === 0
-      ? "00"
-      : Math.floor(durationClock.sec / 3600) >= 1
-      ? Math.floor((durationClock.sec % 3600) / 60)
-      : Math.floor(durationClock.sec / 60) < 10
-      ? "0" + Math.floor(durationClock.sec / 60)
-      : Math.floor(durationClock.sec / 60);
-  const seconds =
-    durationClock.sec % 60 < 10
-      ? "0" + (durationClock.sec % 60)
-      : durationClock.sec % 60;
+  useEffect(() => {
+    setDurationClock({ sec: duration, start: true });
+  }, []);
 
   useEffect(() => {
     let timer;
-    if (durationClock.sec > 0) {
+    if (durationClock !== null) {
       timer = setInterval(() => {
-        setDurationClock((pre) => ({ sec: pre.sec - 1, start: pre.start }));
+        if (durationClock.sec > 0) {
+          setDurationClock((pre) => ({ sec: pre.sec - 1, start: pre.start }));
+        }
       }, 1000);
     }
 
     return () => {
       clearInterval(timer);
     };
-  });
+  }, [durationClock]);
+
+  const task = tasks.find((task) => task.id === id);
+  const { taskName, duration } = task;
+  if (durationClock === null) return;
+
+  function displayDuration() {
+    const hour =
+      Math.floor(durationClock.sec / 3600) < 10
+        ? "0" + Math.floor(durationClock.sec / 3600)
+        : Math.floor(durationClock.sec / 3600);
+    const minutes =
+      durationClock.sec % 3600 === 0
+        ? "00"
+        : Math.floor(durationClock.sec / 3600) >= 1
+        ? Math.floor((durationClock.sec % 3600) / 60)
+        : Math.floor(durationClock.sec / 60) < 10
+        ? "0" + Math.floor(durationClock.sec / 60)
+        : Math.floor(durationClock.sec / 60);
+    const seconds =
+      durationClock.sec % 60 < 10
+        ? "0" + (durationClock.sec % 60)
+        : durationClock.sec % 60;
+    return `${hour}:${minutes}:${seconds}`;
+  }
 
   return (
     <LayoutSytle>
       <TimerTitle>{taskName}</TimerTitle>
-      <TimerClock>{`${hour}:${minutes}:${seconds}`}</TimerClock>
+      <TimerClock>{displayDuration()}</TimerClock>
     </LayoutSytle>
   );
 }
