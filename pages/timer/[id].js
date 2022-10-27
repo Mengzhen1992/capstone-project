@@ -7,25 +7,28 @@ import { displayTime } from "../../ultils";
 export default function Timer() {
   const router = useRouter();
   const { taskName, sec } = router.query;
+
   const [timer, setTimer] = useState({ sec: sec, start: true });
 
   useEffect(() => {
+    /* fix NaN when this page reloads with timer.sec === undefined */
     setTimer({ sec: sec, start: true });
-  }, [sec]);
 
-  console.log("timer: ", timer);
-  console.log("sec", sec);
-  useEffect(() => {
-    let interval = setInterval(() => {
-      if (timer.sec > 0) {
-        setTimer((pre) => ({ sec: pre.sec - 1, start: pre.start }));
-      }
+    const interval = setInterval(() => {
+      setTimer((pre) => {
+        if (pre.sec > 0) {
+          return { sec: pre.sec - 1, start: pre.start };
+        } else {
+          clearInterval(interval);
+          return { sec: pre.sec, start: pre.start };
+        }
+      });
     }, 1000);
 
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [sec]);
 
   return (
     <LayoutSytle>
