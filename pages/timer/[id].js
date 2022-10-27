@@ -28,8 +28,9 @@ export default function Timer({ tasks }) {
   }, [durationClock]);
 
   const task = tasks.find((task) => task.id === id);
+
+  if (durationClock === null || task === undefined) return;
   const { taskName, duration } = task;
-  if (durationClock === null) return;
 
   function displayDuration() {
     const hour =
