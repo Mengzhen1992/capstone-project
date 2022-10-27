@@ -65,3 +65,14 @@ function formatTime(seconds) {
     sec: sec,
   };
 }
+
+export function displayDuration(seconds) {
+  const { hour, min } = formatTime(seconds);
+  if (hour === 0 && min === 0) {
+    return "0min";
+  } else if (hour === 0) {
+    return `${min}min`;
+  } else if (min === 0) {
+    return `${hour}h`;
+  } else return `${hour}h${min}min`;
+}
