@@ -2,6 +2,15 @@ import GlobalStyle from "../components/GlobalStyle";
 import { useState } from "react";
 import { getCurrentDate, generateID } from "../ultils";
 import { initialTasks } from "../services/db.js";
+import { getAllTasks } from "../services/taskService";
+
+export async function getServerSideProps() {
+  const tasks = await getAllTasks();
+
+  return {
+    props: { tasks: tasks },
+  };
+}
 
 function MyApp({ Component, pageProps }) {
   const [tasks, setTasks] = useState(initialTasks);
