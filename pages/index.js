@@ -10,6 +10,21 @@ import dbConnect from "../lib/dbConnect";
 import { getCurrentDate } from "../ultils";
 import { useRouter } from "next/router";
 
+export async function getServerSideProps() {
+  await dbConnect();
+
+  /* find all the data in our database */
+  const result = await Task.find();
+  const tasks = result.map((item) => ({
+    id: item.id,
+    name: item.name,
+    totalTime: item.totalTime,
+    isFinished: item.isFinished,
+  }));
+
+  return { props: { tasks: tasks } };
+}
+
 export default function Home({ tasks }) {
   const router = useRouter();
 
@@ -56,19 +71,4 @@ export default function Home({ tasks }) {
       )}
     </LayoutSytle>
   );
-}
-
-export async function getServerSideProps() {
-  await dbConnect();
-
-  /* find all the data in our database */
-  const result = await Task.find();
-  const tasks = result.map((item) => ({
-    id: item.id,
-    name: item.name,
-    totalTime: item.totalTime,
-    isFinished: item.isFinished,
-  }));
-
-  return { props: { tasks: tasks } };
 }
