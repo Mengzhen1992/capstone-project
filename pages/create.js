@@ -1,20 +1,36 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutSytle from "../components/LayoutStyle";
+import { getCurrentDate } from "../ultils";
 
-export default function Create({ appendTask, getCurrentDate }) {
+export default function Create() {
   const router = useRouter();
-  function sendForm(event) {
+
+  async function handleSubmit(event) {
     event.preventDefault();
+
+    // Get data from form
     const formData = new FormData(event.target);
-    const { title, date, startTime, durationHour, durationMinute } =
+    const { name, date, startTime, durationHour, durationMinute } =
       Object.fromEntries(formData);
-    /* // another way to remove white space
-    if (title.trim() === "") {
-      alert("the name cannot bu empty!");
-      return;
-    } */
-    appendTask(title, durationHour, durationMinute);
+    const data = {
+      name: name,
+      isFinished: false,
+      totalTime: Number(durationHour) * 3600 + Number(durationMinute) * 60,
+    };
+    const JSONdata = JSON.stringify(data);
+
+    // Send data to server
+    const url = "/api/tasks";
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSONdata,
+    };
+
+    await fetch(url, options);
     router.push("/");
   }
 
@@ -22,12 +38,12 @@ export default function Create({ appendTask, getCurrentDate }) {
     <LayoutSytle>
       <FormContainer>
         <Title>Create New Task</Title>
-        <form onSubmit={sendForm}>
-          <Label htmlFor="title">Title</Label>
+        <form onSubmit={handleSubmit}>
+          <Label htmlFor="name">Title</Label>
           <Input
             type="text"
-            name="title"
-            id="title"
+            name="name"
+            id="name"
             pattern="^(?!\s)[a-zA-Z ]{1,}$"
             title="the name cannot be empty!"
             required
@@ -50,12 +66,12 @@ export default function Create({ appendTask, getCurrentDate }) {
             max="24:00"
             required
           />
-          <Label htmlFor="duration">Duration</Label>
+          <Label htmlFor="totalTime">totalTime</Label>
           <InputWrap>
             <DurationInput
               type="number"
               name="durationHour"
-              id="duration"
+              id="totalTime"
               min={0}
               max={24}
               title="give a number between 0 and 24"
@@ -65,7 +81,7 @@ export default function Create({ appendTask, getCurrentDate }) {
             <DurationInput
               type="number"
               name="durationMinute"
-              id="duration"
+              id="totalTime"
               min={0}
               max={60}
               title="give a number between 0 and 60"

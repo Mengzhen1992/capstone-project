@@ -1,26 +1,36 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import LayoutSytle from "../../components/LayoutStyle";
+import Task from "../../models/Task";
 import { displayTime } from "../../ultils";
 
-export default function Timer() {
-  const router = useRouter();
-  const { taskName, sec } = router.query;
+export async function getServerSideProps(context) {
+  const { id } = await context.query;
 
-  const [timer, setTimer] = useState({ sec: sec, start: true });
+  const result = await Task.findById(id).exec();
+  const task = {
+    name: result.name,
+    totalTime: result.totalTime,
+    finishedTime: result.finishedTime,
+    leftTime: result.totalTime - result.finishedTime,
+    start: result.isStarted,
+  };
+  // Pass data to the page via props
+  return { props: { task } };
+}
+
+export default function Timer({ task }) {
+  const [timer, setTimer] = useState(task);
 
   useEffect(() => {
     /* fix NaN when this page reloads with timer.sec === undefined */
-    setTimer({ sec: sec, start: true });
-
     const interval = setInterval(() => {
       setTimer((pre) => {
-        if (pre.sec > 0) {
-          return { sec: pre.sec - 1, start: pre.start };
+        if (pre.leftTime > 0) {
+          return { leftTime: pre.leftTime - 1, start: pre.start };
         } else {
           clearInterval(interval);
-          return { sec: pre.sec, start: pre.start };
+          return { leftTime: pre.leftTime, start: pre.start };
         }
       });
     }, 1000);
@@ -28,12 +38,12 @@ export default function Timer() {
     return () => {
       clearInterval(interval);
     };
-  }, [sec]);
+  }, []);
 
   return (
     <LayoutSytle>
-      <TimerTitle>{taskName}</TimerTitle>
-      <TimerClock>{displayTime(timer.sec)}</TimerClock>
+      <TimerTitle>{task.name}</TimerTitle>
+      <TimerClock>{displayTime(timer.leftTime)}</TimerClock>
     </LayoutSytle>
   );
 }
