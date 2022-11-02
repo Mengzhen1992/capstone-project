@@ -1,26 +1,38 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import LayoutSytle from "../../components/LayoutStyle";
+import Task from "../../models/Task";
 import { displayTime } from "../../ultils";
+import { useRouter } from "next/router";
 
-export default function Timer() {
+export async function getServerSideProps(context) {
+  const { id } = await context.query;
+
+  const result = await Task.findById(id).exec();
+  const task = {
+    name: result.name,
+    totalTime: result.totalTime,
+    finishedTime: result.finishedTime,
+    leftTime: result.totalTime - result.finishedTime,
+    start: result.isStarted,
+  };
+  // Pass data to the page via props
+  return { props: { task } };
+}
+
+export default function Timer({ task }) {
   const router = useRouter();
-  const { taskName, sec } = router.query;
-
-  const [timer, setTimer] = useState({ sec: sec, start: true });
+  const [timer, setTimer] = useState(task);
 
   useEffect(() => {
     /* fix NaN when this page reloads with timer.sec === undefined */
-    setTimer({ sec: sec, start: true });
-
     const interval = setInterval(() => {
       setTimer((pre) => {
-        if (pre.sec > 0) {
-          return { sec: pre.sec - 1, start: pre.start };
+        if (pre.leftTime > 0) {
+          return { leftTime: pre.leftTime - 1, start: pre.start };
         } else {
           clearInterval(interval);
-          return { sec: pre.sec, start: pre.start };
+          return { leftTime: pre.leftTime, start: pre.start };
         }
       });
     }, 1000);
@@ -28,12 +40,13 @@ export default function Timer() {
     return () => {
       clearInterval(interval);
     };
-  }, [sec]);
+  }, []);
 
   return (
     <LayoutSytle>
-      <TimerTitle>{taskName}</TimerTitle>
-      <TimerClock>{displayTime(timer.sec)}</TimerClock>
+      <TimerTitle>{task.name}</TimerTitle>
+      <TimerClock>{displayTime(timer.leftTime)}</TimerClock>
+      <ReturnButton onClick={() => router.push("/")}>Home</ReturnButton>
     </LayoutSytle>
   );
 }
@@ -60,4 +73,22 @@ const TimerClock = styled.div`
   font-size: 4.5rem;
   font-weight: 700;
   line-height: 300px;
+`;
+
+const ReturnButton = styled.button`
+  grid-column: 2 / span 1;
+  grid-row: 4 / span 1;
+  background: rgba(223, 30, 123, 0.59);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  width: 8rem;
+  height: 2.5rem;
+  font-family: var(--font-primary);
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 0rem auto 1rem auto;
+  cursor: pointer;
+  &:hover {
+    background: rgba(223, 30, 123, 0.8);
+  }
 `;

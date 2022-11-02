@@ -7,34 +7,45 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { displayDuration } from "../ultils";
 
-const TaskItem = ({
-  id,
-  taskName,
-  duration,
-  checked,
-  handleToggleTask,
-  handleDelete,
-}) => {
+const TaskItem = ({ id, name, totalTime, isFinished, handleDelete }) => {
   const router = useRouter();
+
+  async function handleToggleTask() {
+    const data = {
+      id: id,
+      isFinished: !isFinished,
+    };
+
+    const JSONdata = JSON.stringify(data);
+    const url = `/api/tasks/${id}`;
+    const options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSONdata,
+    };
+
+    await fetch(url, options);
+    router.push("/");
+  }
 
   return (
     <Item>
-      <ImageCheckContainer onClick={() => handleToggleTask(id)}>
-        {!checked ? (
+      <ImageCheckContainer onClick={handleToggleTask}>
+        {!isFinished ? (
           <Image src={uncheckButton} alt="uncheck button of a task item" />
         ) : (
-          <Image src={checkedButton} alt="checked button of a task item" />
+          <Image src={checkedButton} alt="isFinished button of a task item" />
         )}
       </ImageCheckContainer>
-      <TaskName>{taskName}</TaskName>
-      <TaskDuration>{displayDuration(duration)}</TaskDuration>
+      <TaskName>{name}</TaskName>
+      <TaskDuration>{displayDuration(totalTime)}</TaskDuration>
       <ImagePlayContainer>
-        {!checked ? (
+        {!isFinished ? (
           <Image
             src={playButton}
-            onClick={() =>
-              router.push(`/timer/${id}?taskName=${taskName}&sec=${duration}`)
-            }
+            onClick={() => router.push(`/timer/${id}`)}
             alt="play button of a task item"
           />
         ) : null}

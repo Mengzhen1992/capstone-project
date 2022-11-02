@@ -2,13 +2,9 @@ import { TaskTitle } from "./TaskOngoing";
 import TaskItem from "./TaskItem";
 import styled from "styled-components";
 
-export default function TaskCompleted({
-  tasks,
-  handleToggleTask,
-  handleDelete,
-}) {
+export default function TaskCompleted({ tasks, handleDelete }) {
   const tasksAmountTotal = tasks.length;
-  const tasksAmountCompleted = tasks.filter((task) => task.checked).length;
+  const tasksAmountCompleted = tasks.filter((task) => task.isFinished).length;
   const completedPercent =
     tasksAmountTotal === 0
       ? "0%"
@@ -29,15 +25,14 @@ export default function TaskCompleted({
       </ProgressBarWrap>
       <ul>
         {tasks
-          .filter((task) => task.checked)
+          .filter((task) => task.isFinished)
           .map((task) => (
             <TaskItem
               key={task.id}
               id={task.id}
-              taskName={task.taskName}
-              duration={task.duration}
-              checked={task.checked}
-              handleToggleTask={handleToggleTask}
+              name={task.name}
+              totalTime={task.totalTime}
+              isFinished={task.isFinished}
               handleDelete={handleDelete}
             />
           ))}

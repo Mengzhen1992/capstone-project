@@ -3,33 +3,33 @@ import { generateID } from "../ultils";
 const initialTasks = [
   {
     id: generateID(),
-    taskName: "Reading",
-    duration: 1800,
-    checked: false,
+    name: "Reading",
+    totalTime: 1800,
+    isFinished: false,
   },
   {
     id: generateID(),
-    taskName: "Capstone Project",
-    duration: 21600,
-    checked: false,
+    name: "Capstone Project",
+    totalTime: 21600,
+    isFinished: false,
   },
   {
     id: generateID(),
-    taskName: "Pilates",
-    duration: 2700,
-    checked: false,
+    name: "Pilates",
+    totalTime: 2700,
+    isFinished: false,
   },
   {
     id: generateID(),
-    taskName: "Cleaning room",
-    duration: 600,
-    checked: false,
+    name: "Cleaning room",
+    totalTime: 600,
+    isFinished: false,
   },
   {
     id: generateID(),
-    taskName: "Update CV",
-    duration: 3600,
-    checked: false,
+    name: "Update CV",
+    totalTime: 3600,
+    isFinished: false,
   },
 ];
 
