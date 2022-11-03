@@ -1,7 +1,3 @@
-export function generateID() {
-  return Math.random().toString(36).substring(2);
-}
-
 /**
  * Get current date, e.g. 2022.10.27 Wednesday
  * @returns a string to display current date.

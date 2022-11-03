@@ -90,7 +90,14 @@ export default function Create() {
             <Text>min</Text>
           </InputWrap>
           <Button type="submit">Create</Button>
-          <Button onClick={() => router.push("/")}>Cancel</Button>
+          <Button
+            onClick={(event) => {
+              event.preventDefault();
+              router.push("/");
+            }}
+          >
+            Cancel
+          </Button>
         </form>
       </FormContainer>
     </LayoutSytle>
