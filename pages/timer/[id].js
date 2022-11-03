@@ -54,7 +54,7 @@ export default function Timer({ task }) {
     };
   }, []);
 
-  async function handleTogglePauseButton() {
+  async function handleTogglePause() {
     setTimer((pre) => ({ leftTime: pre.leftTime, pause: !pre.pause }));
     const data = {
       id: task.id,
@@ -76,11 +76,33 @@ export default function Timer({ task }) {
     router.push(`/timer/${task.id}`);
   }
 
+  async function handleStop() {
+    setTimer((pre) => ({ leftTime: pre.leftTime, pause: true }));
+    const data = {
+      id: task.id,
+      isPause: true,
+      finishedTime: task.totalTime - timer.leftTime,
+    };
+
+    const JSONdata = JSON.stringify(data);
+    const url = `/api/tasks/${task.id}`;
+    const options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSONdata,
+    };
+
+    await fetch(url, options);
+    router.push("/");
+  }
+
   return (
     <LayoutSytle>
       <TimerTitle>{task.name}</TimerTitle>
       <TimerClock>{displayTime(timer.leftTime)}</TimerClock>
-      <PauseButton onClick={handleTogglePauseButton}>
+      <PauseButton onClick={handleTogglePause}>
         {!task.pause ? (
           <Image src={pause} alt="pause button for timer" />
         ) : (
@@ -93,7 +115,7 @@ export default function Timer({ task }) {
           />
         )}
       </PauseButton>
-      <StopButton>
+      <StopButton onClick={handleStop}>
         <Image src={stop} alt="stop button for timer" />
       </StopButton>
     </LayoutSytle>

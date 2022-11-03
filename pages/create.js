@@ -115,6 +115,7 @@ const FormContainer = styled.main`
   grid-row: 3 / span 1;
   padding: 2rem 1rem 0rem 1rem;
   margin-top: -2rem;
+  margin-bottom: 10%;
 `;
 
 export const Title = styled.h2`
@@ -175,17 +176,17 @@ const Text = styled.p`
 `;
 
 export const Button = styled.button`
-  display: block;
+  display: inline;
   background: rgba(223, 30, 123, 0.59);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(30px);
-  border-radius: 12px;
-  width: 8rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  width: 40%;
   height: 2.5rem;
   font-family: var(--font-primary);
   font-size: 1.2rem;
   color: #fff;
-  margin: 2rem auto 1rem auto;
+  margin: 15% 5% 1rem 5%;
   cursor: pointer;
   &:hover {
     background: rgba(223, 30, 123, 0.8);
