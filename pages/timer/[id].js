@@ -8,6 +8,7 @@ import pause from "../../public/images/pause.svg";
 import returnButton from "../../public/images/return.svg";
 import start from "../../public/images/start.svg";
 import Image from "next/image";
+import FinishPopup from "../../components/FinishPopup";
 
 export async function getServerSideProps(context) {
   const { id } = await context.query;
@@ -21,6 +22,7 @@ export async function getServerSideProps(context) {
     leftTime: result.totalTime - result.finishedTime,
     start: result.isStarted,
     pause: result.isPause,
+    finish: result.isFinished,
   };
   // Pass data to the page via props
   return { props: { task } };
@@ -32,6 +34,7 @@ export default function Timer({ task }) {
     leftTime: task.leftTime,
     pause: task.pause,
   });
+  const [popup, setPopup] = useState(false);
 
   useEffect(() => {
     /* fix NaN when this page reloads with timer.sec === undefined */
@@ -44,6 +47,7 @@ export default function Timer({ task }) {
           return { leftTime: pre.leftTime - 1, pause: pre.pause };
         } else {
           clearInterval(interval);
+          setPopup(true);
           return { leftTime: pre.leftTime, pause: pre.pause };
         }
       });
@@ -98,6 +102,26 @@ export default function Timer({ task }) {
     router.push("/");
   }
 
+  async function onFinish() {
+    const data = {
+      id: task.id,
+      isFinished: true,
+    };
+
+    const JSONdata = JSON.stringify(data);
+    const url = `/api/tasks/${task.id}`;
+    const options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSONdata,
+    };
+
+    await fetch(url, options);
+    router.push("/");
+  }
+
   return (
     <LayoutSytle>
       <TimerTitle>{task.name}</TimerTitle>
@@ -118,6 +142,7 @@ export default function Timer({ task }) {
       <StopButton onClick={handleReturn}>
         <Image src={returnButton} alt="stop button for timer" />
       </StopButton>
+      {popup && <FinishPopup onFinish={onFinish}></FinishPopup>}
     </LayoutSytle>
   );
 }

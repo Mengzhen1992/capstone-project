@@ -3,7 +3,7 @@ import TaskCompleted from "../components/TaskCompleted";
 import Welcome from "../components/Welcome";
 import TaskOngoing from "../components/TaskOngoing";
 import LayoutSytle from "../components/LayoutStyle";
-import Popup from "../components/Popup";
+import DeletePopup from "../components/DeletePopup";
 import { useState } from "react";
 import Task from "../models/Task";
 import dbConnect from "../lib/dbConnect";
@@ -68,7 +68,7 @@ export default function Home({ tasks }) {
       <TaskCompleted tasks={tasks} handleDelete={handleDelete} />
       <TaskOngoing tasks={tasks} handleDelete={handleDelete} />
       {popup.show && (
-        <Popup onDelete={onDelete} onCancelDelete={onCancelDelete} />
+        <DeletePopup onDelete={onDelete} onCancelDelete={onCancelDelete} />
       )}
     </LayoutSytle>
   );

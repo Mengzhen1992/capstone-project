@@ -186,7 +186,7 @@ export const Button = styled.button`
   font-family: var(--font-primary);
   font-size: 1.2rem;
   color: #fff;
-  margin: 15% 5% 1rem 5%;
+  margin: 3rem 5% 1rem 5%;
   cursor: pointer;
   &:hover {
     background: rgba(223, 30, 123, 0.8);
