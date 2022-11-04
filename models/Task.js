@@ -7,6 +7,7 @@ const taskSchema = new Schema({
   finishedTime: { type: Number, required: true, default: 0 },
   isStarted: { type: Boolean, required: true, default: false },
   isFinished: { type: Boolean, required: true, default: false },
+  isPause: { type: Boolean, required: true, default: false },
 });
 
 const Task = mongoose.models.Task || mongoose.model("Task", taskSchema);

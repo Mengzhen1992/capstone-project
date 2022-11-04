@@ -19,6 +19,7 @@ export async function getServerSideProps() {
     id: item.id,
     name: item.name,
     totalTime: item.totalTime,
+    finishedTime: item.finishedTime,
     isFinished: item.isFinished,
   }));
 

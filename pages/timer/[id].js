@@ -4,17 +4,23 @@ import LayoutSytle from "../../components/LayoutStyle";
 import Task from "../../models/Task";
 import { displayTime } from "../../ultils";
 import { useRouter } from "next/router";
+import pause from "../../public/images/pause.svg";
+import returnButton from "../../public/images/return.svg";
+import start from "../../public/images/start.svg";
+import Image from "next/image";
 
 export async function getServerSideProps(context) {
   const { id } = await context.query;
 
   const result = await Task.findById(id).exec();
   const task = {
+    id: id,
     name: result.name,
     totalTime: result.totalTime,
     finishedTime: result.finishedTime,
     leftTime: result.totalTime - result.finishedTime,
     start: result.isStarted,
+    pause: result.isPause,
   };
   // Pass data to the page via props
   return { props: { task } };
@@ -22,17 +28,23 @@ export async function getServerSideProps(context) {
 
 export default function Timer({ task }) {
   const router = useRouter();
-  const [timer, setTimer] = useState(task);
+  const [timer, setTimer] = useState({
+    leftTime: task.leftTime,
+    pause: task.pause,
+  });
 
   useEffect(() => {
     /* fix NaN when this page reloads with timer.sec === undefined */
     const interval = setInterval(() => {
       setTimer((pre) => {
+        if (pre.pause) {
+          return { leftTime: pre.leftTime, pause: pre.pause };
+        }
         if (pre.leftTime > 0) {
-          return { leftTime: pre.leftTime - 1, start: pre.start };
+          return { leftTime: pre.leftTime - 1, pause: pre.pause };
         } else {
           clearInterval(interval);
-          return { leftTime: pre.leftTime, start: pre.start };
+          return { leftTime: pre.leftTime, pause: pre.pause };
         }
       });
     }, 1000);
@@ -42,11 +54,70 @@ export default function Timer({ task }) {
     };
   }, []);
 
+  async function handleTogglePause() {
+    setTimer((pre) => ({ leftTime: pre.leftTime, pause: !pre.pause }));
+    const data = {
+      id: task.id,
+      isPause: !task.pause,
+      finishedTime: task.totalTime - timer.leftTime,
+    };
+
+    const JSONdata = JSON.stringify(data);
+    const url = `/api/tasks/${task.id}`;
+    const options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSONdata,
+    };
+
+    await fetch(url, options);
+    router.push(`/timer/${task.id}`);
+  }
+
+  async function handleReturn() {
+    setTimer((pre) => ({ leftTime: pre.leftTime, pause: true }));
+    const data = {
+      id: task.id,
+      isPause: true,
+      finishedTime: task.totalTime - timer.leftTime,
+    };
+
+    const JSONdata = JSON.stringify(data);
+    const url = `/api/tasks/${task.id}`;
+    const options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSONdata,
+    };
+
+    await fetch(url, options);
+    router.push("/");
+  }
+
   return (
     <LayoutSytle>
       <TimerTitle>{task.name}</TimerTitle>
       <TimerClock>{displayTime(timer.leftTime)}</TimerClock>
-      <ReturnButton onClick={() => router.push("/")}>Home</ReturnButton>
+      <PauseButton onClick={handleTogglePause}>
+        {!task.pause ? (
+          <Image src={pause} alt="pause button for timer" />
+        ) : (
+          <Image
+            src={start}
+            alt="start button for timer"
+            style={{
+              paddingLeft: 5,
+            }}
+          />
+        )}
+      </PauseButton>
+      <StopButton onClick={handleReturn}>
+        <Image src={returnButton} alt="stop button for timer" />
+      </StopButton>
     </LayoutSytle>
   );
 }
@@ -75,20 +146,26 @@ const TimerClock = styled.div`
   line-height: 300px;
 `;
 
-const ReturnButton = styled.button`
-  grid-column: 2 / span 1;
-  grid-row: 4 / span 1;
-  background: rgba(223, 30, 123, 0.59);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  width: 8rem;
-  height: 2.5rem;
-  font-family: var(--font-primary);
-  font-size: 1.2rem;
-  color: #fff;
-  margin: 0rem auto 1rem auto;
+const PauseButton = styled.button`
+  position: absolute;
+  left: 20%;
+  bottom: 15%;
+  border: none;
+  height: 71px;
+  width: 71px;
+  border-radius: 50%;
+  background-color: #df1e7b;
   cursor: pointer;
-  &:hover {
-    background: rgba(223, 30, 123, 0.8);
-  }
+`;
+
+const StopButton = styled.button`
+  position: absolute;
+  right: 20%;
+  bottom: 15%;
+  border: none;
+  height: 71px;
+  width: 71px;
+  border-radius: 50%;
+  background-color: #df1e7b;
+  cursor: pointer;
 `;
