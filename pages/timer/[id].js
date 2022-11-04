@@ -5,7 +5,7 @@ import Task from "../../models/Task";
 import { displayTime } from "../../ultils";
 import { useRouter } from "next/router";
 import pause from "../../public/images/pause.svg";
-import stop from "../../public/images/stop.svg";
+import returnButton from "../../public/images/return.svg";
 import start from "../../public/images/start.svg";
 import Image from "next/image";
 
@@ -76,7 +76,7 @@ export default function Timer({ task }) {
     router.push(`/timer/${task.id}`);
   }
 
-  async function handleStop() {
+  async function handleReturn() {
     setTimer((pre) => ({ leftTime: pre.leftTime, pause: true }));
     const data = {
       id: task.id,
@@ -115,8 +115,8 @@ export default function Timer({ task }) {
           />
         )}
       </PauseButton>
-      <StopButton onClick={handleStop}>
-        <Image src={stop} alt="stop button for timer" />
+      <StopButton onClick={handleReturn}>
+        <Image src={returnButton} alt="stop button for timer" />
       </StopButton>
     </LayoutSytle>
   );
