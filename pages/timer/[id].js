@@ -160,8 +160,8 @@ const TimerClock = styled.div`
   grid-row: 3 / span 1;
   width: 300px;
   height: 300px;
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  background: var(--color-task);
+  box-shadow: var(--shadow-box);
   border-radius: 150px;
   text-align: center;
   justify-self: center;
@@ -179,7 +179,7 @@ const PauseButton = styled.button`
   height: 71px;
   width: 71px;
   border-radius: 50%;
-  background-color: #df1e7b;
+  background-color: var(--color-percent);
   cursor: pointer;
 `;
 
@@ -191,6 +191,6 @@ const StopButton = styled.button`
   height: 71px;
   width: 71px;
   border-radius: 50%;
-  background-color: #df1e7b;
+  background-color: var(--color-percent);
   cursor: pointer;
 `;
