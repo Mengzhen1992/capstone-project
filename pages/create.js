@@ -89,7 +89,6 @@ export default function Create() {
             />
             <Text>min</Text>
           </InputWrap>
-          <Button type="submit">Create</Button>
           <Button
             onClick={(event) => {
               event.preventDefault();
@@ -98,6 +97,7 @@ export default function Create() {
           >
             Cancel
           </Button>
+          <Button type="submit">Create</Button>
         </form>
       </FormContainer>
     </LayoutSytle>

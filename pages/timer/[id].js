@@ -126,6 +126,9 @@ export default function Timer({ task }) {
     <LayoutSytle>
       <TimerTitle>{task.name}</TimerTitle>
       <TimerClock>{displayTime(timer.leftTime)}</TimerClock>
+      <ReturnButton onClick={handleReturn}>
+        <Image src={returnButton} alt="stop button for timer" />
+      </ReturnButton>
       <PauseButton onClick={handleTogglePause}>
         {!task.pause ? (
           <Image src={pause} alt="pause button for timer" />
@@ -139,9 +142,6 @@ export default function Timer({ task }) {
           />
         )}
       </PauseButton>
-      <StopButton onClick={handleReturn}>
-        <Image src={returnButton} alt="stop button for timer" />
-      </StopButton>
       {popup && <FinishPopup onFinish={onFinish}></FinishPopup>}
     </LayoutSytle>
   );
@@ -173,7 +173,7 @@ const TimerClock = styled.div`
 
 const PauseButton = styled.button`
   position: absolute;
-  left: 20%;
+  right: 20%;
   bottom: 15%;
   border: none;
   height: 71px;
@@ -183,9 +183,9 @@ const PauseButton = styled.button`
   cursor: pointer;
 `;
 
-const StopButton = styled.button`
+const ReturnButton = styled.button`
   position: absolute;
-  right: 20%;
+  left: 20%;
   bottom: 15%;
   border: none;
   height: 71px;
