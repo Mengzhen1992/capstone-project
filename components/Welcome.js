@@ -1,7 +1,21 @@
 import styled from "styled-components";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Welcome() {
-  return <WelcomeText>Hi Monki</WelcomeText>;
+  const { data: session } = useSession();
+  if (session) {
+    return (
+      <>
+        <WelcomeText>Hi {session.user.email}</WelcomeText> <br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+    );
+  }
+  return (
+    <>
+      <button onClick={() => signIn()}>Sign in</button>
+    </>
+  );
 }
 
 const WelcomeText = styled.h2`
