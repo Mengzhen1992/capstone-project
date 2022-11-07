@@ -9,6 +9,8 @@ import Task from "../models/Task";
 import dbConnect from "../lib/dbConnect";
 import { getCurrentDate } from "../ultils";
 import { useRouter } from "next/router";
+import { useSession, signIn } from "next-auth/react";
+import styled from "styled-components";
 
 export async function getServerSideProps() {
   await dbConnect();
@@ -27,6 +29,7 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ tasks }) {
+  const { data: session } = useSession();
   const router = useRouter();
 
   const [popup, setPopup] = useState({ show: false, id: null });
@@ -65,11 +68,51 @@ export default function Home({ tasks }) {
     <LayoutSytle>
       <Welcome />
       <DateStyle>{getCurrentDate()}</DateStyle>
-      <TaskCompleted tasks={tasks} handleDelete={handleDelete} />
-      <TaskOngoing tasks={tasks} handleDelete={handleDelete} />
+      {!session && (
+        <LoginWrap>
+          <LoginText>You are not signed in</LoginText>
+          <LoginButton onClick={() => signIn()}>Sign in</LoginButton>
+        </LoginWrap>
+      )}
+      {session && (
+        <>
+          <TaskCompleted tasks={tasks} handleDelete={handleDelete} />
+          <TaskOngoing tasks={tasks} handleDelete={handleDelete} />
+        </>
+      )}
       {popup.show && (
         <DeletePopup onDelete={onDelete} onCancelDelete={onCancelDelete} />
       )}
     </LayoutSytle>
   );
 }
+
+const LoginWrap = styled.span`
+  grid-column: 2 / span 1;
+  grid-row: 4 / span 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  align-items: center;
+  margin-top: -40%;
+`;
+
+const LoginText = styled.h2`
+  font-family: var(--font-primary);
+  font-weight: 900;
+  font-size: 1.5rem;
+`;
+
+const LoginButton = styled.button`
+  background: var(--color-addbutton);
+  box-shadow: var(--shadow-addbutton);
+  border: 1px solid var(--color-addbutton-border);
+  border-radius: 10px;
+  font-family: var(--font-primary);
+  font-size: 1.3rem;
+  color: var(--color-taskname);
+  text-align: center;
+  height: 2.3rem;
+  width: 6rem;
+  cursor: pointer;
+`;

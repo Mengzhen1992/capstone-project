@@ -10,8 +10,12 @@ export default async function handler(req, res) {
   await dbConnect();
 
   if (method === "GET") {
-    const tasks = await Task.find({});
-    return res.status(200).json({ success: true, data: tasks });
+    if (session) {
+      const tasks = await Task.find({});
+      return res.status(200).json({ success: true, data: tasks });
+    } else {
+      return res.status(401).json({ message: "Unanthorized" });
+    }
   } else if (method === "POST") {
     if (session) {
       const task = await Task.create(req.body);
