@@ -8,6 +8,7 @@ import pause from "../../public/images/pause.svg";
 import returnButton from "../../public/images/return.svg";
 import start from "../../public/images/start.svg";
 import Image from "next/image";
+import FinishPopup from "../../components/FinishPopup";
 
 export async function getServerSideProps(context) {
   const { id } = await context.query;
@@ -21,6 +22,7 @@ export async function getServerSideProps(context) {
     leftTime: result.totalTime - result.finishedTime,
     start: result.isStarted,
     pause: result.isPause,
+    finish: result.isFinished,
   };
   // Pass data to the page via props
   return { props: { task } };
@@ -32,6 +34,7 @@ export default function Timer({ task }) {
     leftTime: task.leftTime,
     pause: task.pause,
   });
+  const [popup, setPopup] = useState(false);
 
   useEffect(() => {
     /* fix NaN when this page reloads with timer.sec === undefined */
@@ -44,6 +47,7 @@ export default function Timer({ task }) {
           return { leftTime: pre.leftTime - 1, pause: pre.pause };
         } else {
           clearInterval(interval);
+          setPopup(true);
           return { leftTime: pre.leftTime, pause: pre.pause };
         }
       });
@@ -98,10 +102,33 @@ export default function Timer({ task }) {
     router.push("/");
   }
 
+  async function onFinish() {
+    const data = {
+      id: task.id,
+      isFinished: true,
+    };
+
+    const JSONdata = JSON.stringify(data);
+    const url = `/api/tasks/${task.id}`;
+    const options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSONdata,
+    };
+
+    await fetch(url, options);
+    router.push("/");
+  }
+
   return (
     <LayoutSytle>
       <TimerTitle>{task.name}</TimerTitle>
       <TimerClock>{displayTime(timer.leftTime)}</TimerClock>
+      <ReturnButton onClick={handleReturn}>
+        <Image src={returnButton} alt="stop button for timer" />
+      </ReturnButton>
       <PauseButton onClick={handleTogglePause}>
         {!task.pause ? (
           <Image src={pause} alt="pause button for timer" />
@@ -115,9 +142,7 @@ export default function Timer({ task }) {
           />
         )}
       </PauseButton>
-      <StopButton onClick={handleReturn}>
-        <Image src={returnButton} alt="stop button for timer" />
-      </StopButton>
+      {popup && <FinishPopup onFinish={onFinish}></FinishPopup>}
     </LayoutSytle>
   );
 }
@@ -135,8 +160,8 @@ const TimerClock = styled.div`
   grid-row: 3 / span 1;
   width: 300px;
   height: 300px;
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  background: var(--color-task);
+  box-shadow: var(--shadow-box);
   border-radius: 150px;
   text-align: center;
   justify-self: center;
@@ -148,24 +173,24 @@ const TimerClock = styled.div`
 
 const PauseButton = styled.button`
   position: absolute;
-  left: 20%;
-  bottom: 15%;
-  border: none;
-  height: 71px;
-  width: 71px;
-  border-radius: 50%;
-  background-color: #df1e7b;
-  cursor: pointer;
-`;
-
-const StopButton = styled.button`
-  position: absolute;
   right: 20%;
   bottom: 15%;
   border: none;
   height: 71px;
   width: 71px;
   border-radius: 50%;
-  background-color: #df1e7b;
+  background-color: var(--color-percent);
+  cursor: pointer;
+`;
+
+const ReturnButton = styled.button`
+  position: absolute;
+  left: 20%;
+  bottom: 15%;
+  border: none;
+  height: 71px;
+  width: 71px;
+  border-radius: 50%;
+  background-color: var(--color-percent);
   cursor: pointer;
 `;

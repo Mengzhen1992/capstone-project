@@ -3,6 +3,21 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
       :root {
           --font-primary: 'Judson';
+          --color-background: rgba(255, 255, 255, 0.4);
+          --color-wrap: rgba(253, 231, 190, 0.4);
+          --color-task: rgba(255, 255, 255, 0.5);
+          --color-percent: #df1e7b;
+          --color-button: rgba(223, 30, 123, 0.7);
+          --color-button-font: #fff;
+          --color-button-hover: rgba(223, 30, 123, 0.8);
+          --color-addbutton: rgba(255, 255, 255, 0.45);
+          --color-addbutton-border: rgba(255, 255, 255, 0.15);
+          --color-popup: rgba(255, 255, 255, 0.8);
+          --color-taskname: rgba(0, 0, 0, 0.8);
+          --color-text: #000000;
+          --shadow-box: 0px 4px 20px rgba(0, 0, 0, 0.1);
+          --shadow-addbutton: 0px 4px 20px rgba(0, 0, 0, 0.15);
+          --shadow-text: 0px 4px 4px rgba(0, 0, 0, 0.25);
       }
 
       /* judson-regular - latin */

@@ -95,8 +95,8 @@ export default TaskItem;
 
 const Item = styled.li`
   position: relative;
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  background: var(--color-task);
+  box-shadow: var(--shadow-box);
   border-radius: 8px;
   margin: 0.8rem 0.8rem 0.8rem 0;
   padding-left: 3.2rem;
@@ -134,18 +134,14 @@ const ImageDeleteContainer = styled.button`
 
 const TaskName = styled.p`
   font-family: var(--font-primary);
-  font-style: normal;
-  font-weight: 400;
   font-size: 1.2rem;
-  color: rgba(0, 0, 0, 0.8);
+  color: var(--color-taskname);
   opacity: 0.9;
 `;
 
 const TaskDuration = styled.p`
   font-family: var(--font-primary);
-  font-style: normal;
-  font-weight: 400;
   font-size: 1rem;
-  color: rgba(0, 0, 0, 0.8);
+  color: var(--color-taskname);
   opacity: 0.8;
 `;

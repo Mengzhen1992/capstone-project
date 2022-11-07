@@ -22,6 +22,6 @@ export const WrapMask = styled.div`
   row-gap: 2rem;
   width: 100vw;
   min-height: 100vh;
-  background: rgba(253, 231, 190, 0.4);
+  background: var(--color-wrap);
   backdrop-filter: blur(40px);
 `;

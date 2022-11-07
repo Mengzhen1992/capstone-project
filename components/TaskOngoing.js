@@ -46,8 +46,8 @@ export default function TaskOngoing({ tasks, handleDelete }) {
 
 export const TaskContainer = styled.div`
   display: relative;
-  background: rgba(255, 255, 255, 0.4);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  background: var(--color-background);
+  box-shadow: var(--shadow-box);
   border-radius: 8px;
   grid-column: 2 / span 1;
   grid-row: 4 / span 1;
@@ -59,8 +59,6 @@ export const TaskContainer = styled.div`
 
 export const TaskTitle = styled.h3`
   font-family: var(--font-primary);
-  font-style: normal;
-  font-weight: 400;
   font-size: 1.2rem;
 `;
 
@@ -70,12 +68,12 @@ const AddButton = styled.button`
   left: 50%;
   width: 71px;
   height: 71px;
-  background: rgba(255, 255, 255, 0.45);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+  background: var(--color-addbutton);
+  box-shadow: var(--shadow-addbutton);
   border-radius: 71px;
   margin-left: -35.5px;
   bottom: 1.6rem;
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  border: 2px solid var(--color-addbutton-border);
   cursor: pointer;
   &:hover {
     transform: scale(1.2);

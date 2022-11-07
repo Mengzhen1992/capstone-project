@@ -89,7 +89,6 @@ export default function Create() {
             />
             <Text>min</Text>
           </InputWrap>
-          <Button type="submit">Create</Button>
           <Button
             onClick={(event) => {
               event.preventDefault();
@@ -98,6 +97,7 @@ export default function Create() {
           >
             Cancel
           </Button>
+          <Button type="submit">Create</Button>
         </form>
       </FormContainer>
     </LayoutSytle>
@@ -108,8 +108,8 @@ const FormContainer = styled.main`
   display: flex;
   flex-flow: column wrap;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.4);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  background: var(--color-background);
+  box-shadow: var(--shadow-box);
   border-radius: 8px;
   grid-column: 2 / span 1;
   grid-row: 3 / span 1;
@@ -119,9 +119,6 @@ const FormContainer = styled.main`
 `;
 
 export const Title = styled.h2`
-  font-family: var(--font-primary);
-  font-style: normal;
-  font-weight: 400;
   font-size: 1.5rem;
   align-self: center;
 `;
@@ -143,8 +140,8 @@ const Input = styled.input`
   border: 0;
   width: 100%;
   height: 2rem;
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  background: var(--color-task);
+  box-shadow: var(--shadow-box);
   backdrop-filter: blur(30px);
   border-radius: 5px;
   font-family: var(--font-primary);
@@ -155,8 +152,8 @@ const DurationInput = styled.input`
   border: 0;
   width: 28%;
   height: 2rem;
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  background: var(--color-task);
+  box-shadow: var(--shadow-box);
   backdrop-filter: blur(30px);
   border-radius: 5px;
   font-family: var(--font-primary);
@@ -167,28 +164,27 @@ const Text = styled.p`
   height: 2rem;
   text-align: center;
   line-height: 2rem;
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  background: var(--color-task);
+  box-shadow: var(--shadow-text);
   backdrop-filter: blur(30px);
   border-radius: 5px;
-  font-family: var(--font-primary);
   font-size: 1.2rem;
 `;
 
 export const Button = styled.button`
   display: inline;
-  background: rgba(223, 30, 123, 0.59);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--color-button);
+  box-shadow: var(--shadow-box);
+  border: 1px solid var(--shadow-addbutton);
   border-radius: 15px;
   width: 40%;
   height: 2.5rem;
   font-family: var(--font-primary);
   font-size: 1.2rem;
-  color: #fff;
-  margin: 15% 5% 1rem 5%;
+  color: var(--color-button-font);
+  margin: 3rem 5% 1rem 5%;
   cursor: pointer;
   &:hover {
-    background: rgba(223, 30, 123, 0.8);
+    background: var(--color-button-hover);
   }
 `;
