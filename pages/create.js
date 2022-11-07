@@ -30,8 +30,13 @@ export default function Create() {
       body: JSONdata,
     };
 
-    await fetch(url, options);
-    router.push("/");
+    const response = await fetch(url, options);
+    const result = await response.json();
+    if (result.createdId) {
+      router.push("/");
+    } else {
+      alert("Creating a product did not work!");
+    }
   }
 
   return (

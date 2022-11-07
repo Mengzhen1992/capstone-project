@@ -6,7 +6,7 @@ export default function Welcome() {
   if (session) {
     return (
       <>
-        <WelcomeText>Hi {session.user.email}</WelcomeText> <br />
+        <WelcomeText>Hi {session.user.email.slice(0, -10)}</WelcomeText>
         <button onClick={() => signOut()}>Sign out</button>
       </>
     );
@@ -21,9 +21,8 @@ export default function Welcome() {
 const WelcomeText = styled.h2`
   grid-column: 2 / span 1;
   grid-row: 1 / span 1;
-  margin-top: 1.5rem;
+  margin-top: 1.7rem;
   font-family: var(--font-primary);
-  font-style: normal;
   font-weight: 900;
-  font-size: 2.2rem;
+  font-size: 2rem;
 `;
