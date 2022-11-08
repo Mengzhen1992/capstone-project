@@ -2,8 +2,10 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutSytle from "../components/LayoutStyle";
 import { getCurrentDate } from "../ultils";
+import { useSession } from "next-auth/react";
 
 export default function Create() {
+  const { data: session } = useSession();
   const router = useRouter();
 
   async function handleSubmit(event) {
@@ -16,6 +18,8 @@ export default function Create() {
     const data = {
       name: name,
       isFinished: false,
+      email: session.user.email,
+      ticoUser: session.user.name,
       totalTime: Number(durationHour) * 3600 + Number(durationMinute) * 60,
     };
     const JSONdata = JSON.stringify(data);

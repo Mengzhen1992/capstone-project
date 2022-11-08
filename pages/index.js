@@ -10,22 +10,33 @@ import dbConnect from "../lib/dbConnect";
 import { getCurrentDate } from "../ultils";
 import { useRouter } from "next/router";
 import { useSession, signIn } from "next-auth/react";
+import { authOptions } from "../pages/api/auth/[...nextauth]";
+import { unstable_getServerSession } from "next-auth/next";
 import styled from "styled-components";
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
   await dbConnect();
 
-  /* find all the data in our database */
-  const result = await Task.find();
-  const tasks = result.map((item) => ({
-    id: item.id,
-    name: item.name,
-    totalTime: item.totalTime,
-    finishedTime: item.finishedTime,
-    isFinished: item.isFinished,
-  }));
+  if (session) {
+    const result = await Task.find({ email: session.user.email });
+    console.log(session.user.email);
 
-  return { props: { tasks: tasks } };
+    const tasks = result.map((item) => ({
+      id: item.id,
+      name: item.name,
+      totalTime: item.totalTime,
+      finishedTime: item.finishedTime,
+      isFinished: item.isFinished,
+    }));
+
+    return { props: { tasks: tasks } };
+  }
+  return { props: { tasks: [] } };
 }
 
 export default function Home({ tasks }) {
@@ -94,7 +105,7 @@ const LoginWrap = styled.span`
   flex-direction: column;
   gap: 1.8rem;
   align-items: center;
-  margin-top: -40%;
+  margin-top: -8rem;
 `;
 
 const LoginText = styled.h2`

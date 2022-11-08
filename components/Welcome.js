@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { useSession, signOut } from "next-auth/react";
+import logout from "../public/images/logout.svg";
+import Image from "next/image";
 
 export default function Welcome() {
   const { data: session } = useSession();
@@ -7,7 +9,9 @@ export default function Welcome() {
     return (
       <Wrap>
         <WelcomeText>Hi {session.user.name}</WelcomeText>
-        <Logoutbutton onClick={() => signOut()}>Sign out</Logoutbutton>
+        <Logoutbutton onClick={() => signOut()}>
+          <Image src={logout} alt="button to logout" />
+        </Logoutbutton>
       </Wrap>
     );
   }
@@ -29,15 +33,10 @@ const WelcomeText = styled.h2`
 `;
 
 const Logoutbutton = styled.button`
-  background: var(--color-addbutton);
-  box-shadow: var(--shadow-addbutton);
-  border: 1px solid var(--color-addbutton-border);
-  border-radius: 6px;
-  font-family: var(--font-primary);
-  font-size: 1.2rem;
-  color: var(--color-taskname);
-  height: 1.5rem;
-  width: 5.5rem;
+  background: transparent;
+  border-style: none;
+  font-size: 1.5rem;
   margin-top: 2.55rem;
+  text-align: right;
   cursor: pointer;
 `;
