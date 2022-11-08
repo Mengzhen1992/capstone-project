@@ -8,13 +8,9 @@ import Image from "next/image";
 export default function Login({ csrfToken }) {
   return (
     <LayoutSytle>
-      <Form action="http://localhost:3000/api/auth/signin/github" method="POST">
+      <Form action="/api/auth/signin/github" method="POST">
         <input type="hidden" name="csrfToken" value={csrfToken} />
-        <input
-          type="hidden"
-          name="callbackUrl"
-          value="http://localhost:3000/"
-        />
+        <input type="hidden" name="callbackUrl" value="/" />
         <GithubButton type="submit">
           <Image src={github} alt="github icon" />
           <GithubText>Sign in with Github</GithubText>
