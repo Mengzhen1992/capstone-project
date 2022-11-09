@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutSytle from "../components/LayoutStyle";
 import { getCurrentDate } from "../ultils";
-import { session, getSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
@@ -20,6 +20,7 @@ export const getServerSideProps = async (context) => {
 
 export default function Create() {
   const router = useRouter();
+  const { data: session } = useSession();
 
   async function handleSubmit(event) {
     event.preventDefault();
