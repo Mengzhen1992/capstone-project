@@ -8,6 +8,8 @@ const taskSchema = new Schema({
   isStarted: { type: Boolean, required: true, default: false },
   isFinished: { type: Boolean, required: true, default: false },
   isPause: { type: Boolean, required: true, default: false },
+  ticoUser: { type: String, required: true },
+  email: { type: String, required: true },
 });
 
 const Task = mongoose.models.Task || mongoose.model("Task", taskSchema);

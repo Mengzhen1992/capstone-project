@@ -7,7 +7,7 @@ export const DateStyle = styled.p`
   font-style: normal;
   font-weight: 400;
   font-size: 1.2rem;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--color-date);
 `;
 
 export default DateStyle;

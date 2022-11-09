@@ -1,17 +1,20 @@
 import dbConnect from "../../../lib/dbConnect";
 import Task from "../../../models/Task";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(req, res) {
+  const session = await unstable_getServerSession(req, res, authOptions);
   const { method } = req;
 
   await dbConnect();
 
+  if (!session) return res.status(401).json({ message: "Unanthorized" });
   switch (method) {
     case "GET":
       try {
-        const tasks = await Task.find(
-          {}
-        ); /* find all the data in our database */
+        const tasks = await Task.find({});
+        //find all the data in our database
         res.status(200).json({ success: true, data: tasks });
       } catch (error) {
         res.status(400).json({ success: false });
@@ -19,9 +22,8 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        const task = await Task.create(
-          req.body
-        ); /* create a new model in the database */
+        const task = await Task.create(req.body);
+        //create a new model in the database
         res.status(201).json({ success: true, data: task });
       } catch (error) {
         res.status(400).json({ success: false });

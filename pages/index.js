@@ -9,27 +9,41 @@ import Task from "../models/Task";
 import dbConnect from "../lib/dbConnect";
 import { getCurrentDate } from "../ultils";
 import { useRouter } from "next/router";
+import { authOptions } from "../pages/api/auth/[...nextauth]";
+import { unstable_getServerSession } from "next-auth/next";
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
   await dbConnect();
 
-  /* find all the data in our database */
-  const result = await Task.find();
-  const tasks = result.map((item) => ({
-    id: item.id,
-    name: item.name,
-    totalTime: item.totalTime,
-    finishedTime: item.finishedTime,
-    isFinished: item.isFinished,
-  }));
+  if (session) {
+    const result = await Task.find({ email: session.user.email });
 
-  return { props: { tasks: tasks } };
+    const tasks = result.map((item) => ({
+      id: item.id,
+      name: item.name,
+      totalTime: item.totalTime,
+      finishedTime: item.finishedTime,
+      isFinished: item.isFinished,
+    }));
+
+    return { props: { tasks: tasks } };
+  }
+  return {
+    redirect: {
+      destination: "/onboarding",
+    },
+  };
 }
 
 export default function Home({ tasks }) {
   const router = useRouter();
-
   const [popup, setPopup] = useState({ show: false, id: null });
+
   // this will show the confirmation box
   function handleDelete(id) {
     setPopup({ show: true, id });

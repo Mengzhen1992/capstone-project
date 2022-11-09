@@ -2,9 +2,25 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutSytle from "../components/LayoutStyle";
 import { getCurrentDate } from "../ultils";
+import { useSession, getSession } from "next-auth/react";
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/onboarding",
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+};
 
 export default function Create() {
   const router = useRouter();
+  const { data: session } = useSession();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -16,6 +32,8 @@ export default function Create() {
     const data = {
       name: name,
       isFinished: false,
+      email: session.user.email,
+      ticoUser: session.user.name,
       totalTime: Number(durationHour) * 3600 + Number(durationMinute) * 60,
     };
     const JSONdata = JSON.stringify(data);
@@ -29,7 +47,6 @@ export default function Create() {
       },
       body: JSONdata,
     };
-
     await fetch(url, options);
     router.push("/");
   }
