@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutSytle from "../components/LayoutStyle";
 import { getCurrentDate } from "../ultils";
-import { getSession } from "next-auth/react";
+import { session, getSession } from "next-auth/react";
 
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
