@@ -9,10 +9,10 @@ import Task from "../models/Task";
 import dbConnect from "../lib/dbConnect";
 import { getCurrentDate } from "../ultils";
 import { useRouter } from "next/router";
-import { useSession, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import styled from "styled-components";
+import { useEffect } from "react";
 
 export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(
@@ -24,7 +24,6 @@ export async function getServerSideProps(context) {
 
   if (session) {
     const result = await Task.find({ email: session.user.email });
-    console.log(session.user.email);
 
     const tasks = result.map((item) => ({
       id: item.id,
@@ -42,8 +41,17 @@ export async function getServerSideProps(context) {
 export default function Home({ tasks }) {
   const { data: session } = useSession();
   const router = useRouter();
-
   const [popup, setPopup] = useState({ show: false, id: null });
+
+  useEffect(() => {
+    if (!session) {
+      router.push("/onboarding");
+      return;
+    } else {
+      router.push("/");
+    }
+  }, session);
+
   // this will show the confirmation box
   function handleDelete(id) {
     setPopup({ show: true, id });
@@ -79,51 +87,11 @@ export default function Home({ tasks }) {
     <LayoutSytle>
       <Welcome />
       <DateStyle>{getCurrentDate()}</DateStyle>
-      {!session && (
-        <LoginWrap>
-          <LoginText>You are not signed in</LoginText>
-          <LoginButton onClick={() => signIn()}>Sign in</LoginButton>
-        </LoginWrap>
-      )}
-      {session && (
-        <>
-          <TaskCompleted tasks={tasks} handleDelete={handleDelete} />
-          <TaskOngoing tasks={tasks} handleDelete={handleDelete} />
-        </>
-      )}
+      <TaskCompleted tasks={tasks} handleDelete={handleDelete} />
+      <TaskOngoing tasks={tasks} handleDelete={handleDelete} />
       {popup.show && (
         <DeletePopup onDelete={onDelete} onCancelDelete={onCancelDelete} />
       )}
     </LayoutSytle>
   );
 }
-
-const LoginWrap = styled.span`
-  grid-column: 2 / span 1;
-  grid-row: 4 / span 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1.8rem;
-  align-items: center;
-  margin-top: -8rem;
-`;
-
-const LoginText = styled.h2`
-  font-family: var(--font-primary);
-  font-weight: 900;
-  font-size: 1.5rem;
-`;
-
-const LoginButton = styled.button`
-  background: var(--color-addbutton);
-  box-shadow: var(--shadow-addbutton);
-  border: 1px solid var(--color-addbutton-border);
-  border-radius: 10px;
-  font-family: var(--font-primary);
-  font-size: 1.3rem;
-  color: var(--color-taskname);
-  text-align: center;
-  height: 2.3rem;
-  width: 6rem;
-  cursor: pointer;
-`;

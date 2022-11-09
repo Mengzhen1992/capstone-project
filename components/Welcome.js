@@ -1,21 +1,30 @@
 import styled from "styled-components";
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signOut, signIn } from "next-auth/react";
 import logout from "../public/images/logout.svg";
+import login from "../public/images/login.svg";
 import Image from "next/image";
 
 export default function Welcome() {
   const { data: session } = useSession();
-  if (session) {
-    return (
-      <Wrap>
-        <WelcomeText>Hi {session.user.name}</WelcomeText>
-        <Logoutbutton onClick={() => signOut()}>
-          <Image src={logout} alt="button to logout" />
-        </Logoutbutton>
-      </Wrap>
-    );
-  }
-  return <></>;
+  return (
+    <>
+      {session ? (
+        <Wrap>
+          <WelcomeText>Hi {session.user.name}</WelcomeText>
+          <Logoutbutton onClick={() => signOut()}>
+            <Image src={logout} alt="button to logout" />
+          </Logoutbutton>
+        </Wrap>
+      ) : (
+        <Wrap>
+          <WelcomeText>Sign in</WelcomeText>
+          <Logoutbutton onClick={() => signIn()}>
+            <Image src={login} alt="button to login" />
+          </Logoutbutton>
+        </Wrap>
+      )}
+    </>
+  );
 }
 
 const Wrap = styled.span`
@@ -36,7 +45,7 @@ const Logoutbutton = styled.button`
   background: transparent;
   border-style: none;
   font-size: 1.5rem;
-  margin-top: 2.55rem;
+  margin-top: 2.7rem;
   text-align: right;
   cursor: pointer;
 `;

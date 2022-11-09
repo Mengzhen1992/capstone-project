@@ -9,32 +9,12 @@ export default async function handler(req, res) {
 
   await dbConnect();
 
-  if (method === "GET") {
-    if (session) {
-      const tasks = await Task.find({});
-      return res.status(200).json({ success: true, data: tasks });
-    } else {
-      return res.status(401).json({ message: "Unanthorized" });
-    }
-  } else if (method === "POST") {
-    if (session) {
-      const task = await Task.create(req.body);
-      return res
-        .status(201)
-        .json({ message: "Task created", createdId: task.id });
-    } else {
-      return res.status(401).json({ message: "Unanthorized" });
-    }
-  }
-  return res.status(405).json({ message: "HTTP method is not allowed" });
-
-  /* switch (method) {
+  if (!session) return res.status(401).json({ message: "Unanthorized" });
+  switch (method) {
     case "GET":
       try {
-        const tasks = await Task.find(
-          {}
-        ); 
-        //find all the data in our database 
+        const tasks = await Task.find({});
+        //find all the data in our database
         res.status(200).json({ success: true, data: tasks });
       } catch (error) {
         res.status(400).json({ success: false });
@@ -42,10 +22,8 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        const task = await Task.create(
-          req.body
-        ); 
-        //create a new model in the database 
+        const task = await Task.create(req.body);
+        //create a new model in the database
         res.status(201).json({ success: true, data: task });
       } catch (error) {
         res.status(400).json({ success: false });
@@ -54,5 +32,5 @@ export default async function handler(req, res) {
     default:
       res.status(400).json({ success: false });
       break;
-  } */
+  }
 }

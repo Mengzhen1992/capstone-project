@@ -3,19 +3,29 @@ import { getCsrfToken } from "next-auth/react";
 import LayoutSytle from "../../components/LayoutStyle";
 import styled from "styled-components";
 import github from "../../public/images/github.svg";
+import google from "../../public/images/google.svg";
+
 import Image from "next/image";
 
 export default function Login({ csrfToken }) {
   return (
     <LayoutSytle>
-      <Form action="/api/auth/signin/github" method="POST">
+      <GithubForm action="/api/auth/signin/github" method="POST">
         <input type="hidden" name="csrfToken" value={csrfToken} />
         <input type="hidden" name="callbackUrl" value="/" />
         <GithubButton type="submit">
           <Image src={github} alt="github icon" />
-          <GithubText>Sign in with Github</GithubText>
+          <Text>Sign in with Github</Text>
         </GithubButton>
-      </Form>
+      </GithubForm>
+      <GoogleForm action="/api/auth/signin/google" method="POST">
+        <input type="hidden" name="csrfToken" value={csrfToken} />
+        <input type="hidden" name="callbackUrl" value="/" />
+        <GithubButton type="submit">
+          <Image src={google} alt="google icon" />
+          <Text>Sign in with Google</Text>
+        </GithubButton>
+      </GoogleForm>
     </LayoutSytle>
   );
 }
@@ -38,13 +48,22 @@ const GithubButton = styled.button`
     background: var(--color-button-hover);
   }
 `;
-const Form = styled.form`
+
+const GithubForm = styled.form`
   grid-column: 2 / span 1;
   grid-row: 3 / span 1;
   justify-self: center;
   margin-top: 12rem;
 `;
-const GithubText = styled.p`
+
+const GoogleForm = styled.form`
+  grid-column: 2 / span 1;
+  grid-row: 3 / span 1;
+  justify-self: center;
+  margin-top: 16rem;
+`;
+
+const Text = styled.p`
   padding-left: 0.5rem;
 `;
 
