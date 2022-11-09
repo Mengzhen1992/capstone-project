@@ -9,10 +9,8 @@ import Task from "../models/Task";
 import dbConnect from "../lib/dbConnect";
 import { getCurrentDate } from "../ultils";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import { useEffect } from "react";
 
 export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(
@@ -35,22 +33,16 @@ export async function getServerSideProps(context) {
 
     return { props: { tasks: tasks } };
   }
-  return { props: { tasks: [] } };
+  return {
+    redirect: {
+      destination: "/onboarding",
+    },
+  };
 }
 
 export default function Home({ tasks }) {
-  const { data: session } = useSession();
   const router = useRouter();
   const [popup, setPopup] = useState({ show: false, id: null });
-
-  useEffect(() => {
-    if (!session) {
-      router.push("/onboarding");
-      return;
-    } else {
-      router.push("/");
-    }
-  }, session);
 
   // this will show the confirmation box
   function handleDelete(id) {

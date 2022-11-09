@@ -1,25 +1,18 @@
 import styled from "styled-components";
-import { useSession, signOut, signIn } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import logout from "../public/images/logout.svg";
-import login from "../public/images/login.svg";
+
 import Image from "next/image";
 
 export default function Welcome() {
   const { data: session } = useSession();
   return (
     <>
-      {session ? (
+      {session && (
         <Wrap>
           <WelcomeText>Hi {session.user.name}</WelcomeText>
           <Logoutbutton onClick={() => signOut()}>
             <Image src={logout} alt="button to logout" />
-          </Logoutbutton>
-        </Wrap>
-      ) : (
-        <Wrap>
-          <WelcomeText>Sign in</WelcomeText>
-          <Logoutbutton onClick={() => signIn()}>
-            <Image src={login} alt="button to login" />
           </Logoutbutton>
         </Wrap>
       )}

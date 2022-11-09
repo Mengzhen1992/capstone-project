@@ -2,19 +2,24 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutSytle from "../components/LayoutStyle";
 import { getCurrentDate } from "../ultils";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { getSession } from "next-auth/react";
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/onboarding",
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+};
 
 export default function Create() {
-  const { data: session } = useSession();
   const router = useRouter();
-
-  useEffect(() => {
-    if (!session) {
-      router.push("/auth/login");
-      return;
-    }
-  }, session);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -41,14 +46,6 @@ export default function Create() {
       },
       body: JSONdata,
     };
-
-    /* const response = await fetch(url, options);
-    const result = await response.json();
-    if (result.createdId) {
-      router.push("/");
-    } else {
-      alert("Creating a product did not work!");
-    } */
     await fetch(url, options);
     router.push("/");
   }
