@@ -50,6 +50,69 @@ const GlobalStyle = createGlobalStyle`
       a {
         text-decoration: none;
       }
+
+      .rbc-btn-group button {
+        background: var(--color-button);
+        font-family: var(--font-primary);
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--color-button-font);
+        margin: 1.5rem 1rem 0.8rem 1rem;
+        box-shadow: var(--shadow-box);
+        border: 1px solid var(--shadow-addbutton);
+      }
+      .rbc-btn-group > button:first-child:not(:last-child), 
+      .rbc-btn-group > button:not(:first-child):not(:last-child),
+      .rbc-btn-group > button:last-child:not(:first-child) {
+        border-radius: 10px;
+      }
+      
+      .rbc-toolbar-label {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-top:0.2rem;
+        margin-bottom: -1.8rem;
+      }
+
+      .rbc-time-view,
+      .rbc-time-header-content {
+        border: none;
+      }
+
+      .rbc-today {
+        background-color: transparent;
+      }
+
+      .rbc-time-content {
+        border-top: 1.5px solid gray;
+      }
+
+      .rbc-timeslot-group {
+        border-bottom: none;
+        min-height: 50px;
+      }
+
+      .rbc-time-content > * + * > * {
+        border-left: 1.5px solid gray;
+      }
+
+      .rbc-day-slot .rbc-time-slot {
+        border-top: none;
+      }
+
+      .rbc-day-slot .rbc-event, .rbc-day-slot .rbc-background-event {
+        background:var(--color-task);
+        color: var(--color-taskname);
+        opacity: 0.9;
+        box-shadow: var(--shadow-box);
+        border: 1px solid var(--shadow-addbutton);
+      }
+
+      .rbc-current-time-indicator {
+        background-color: var(--color-button);
+        height: 2px;
+      }
+    
   `;
 
 export default GlobalStyle;
