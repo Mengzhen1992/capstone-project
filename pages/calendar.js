@@ -1,12 +1,16 @@
 import { Calendar, momentLocalizer, Views } from "react-big-calendar";
 import moment from "moment";
 import LayoutStyle from "../components/LayoutStyle";
+import back from "../public/images/back.svg";
+import { useRouter } from "next/router";
+import Image from "next/image";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import styled from "styled-components";
 import { useMemo } from "react";
 
 export default function MyCalendar() {
+  const router = useRouter();
   const localizer = momentLocalizer(moment);
   const { defaultDate, views } = useMemo(
     () => ({
@@ -34,6 +38,9 @@ export default function MyCalendar() {
   ];
   return (
     <LayoutStyle>
+      <ImageContainer onClick={() => router.push("/")}>
+        <Image src={back} alt="button to homepage" />
+      </ImageContainer>
       <CalenderWrap>
         <Calendar
           localizer={localizer}
@@ -61,4 +68,10 @@ const CalenderWrap = styled.div`
   font-size: 1.2rem;
   color: var(--color-taskname);
   opacity: 0.9;
+`;
+
+const ImageContainer = styled.div`
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 1;
+  margin-top: -2rem;
 `;

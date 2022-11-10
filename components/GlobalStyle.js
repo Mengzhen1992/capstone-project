@@ -69,7 +69,7 @@ const GlobalStyle = createGlobalStyle`
       
       .rbc-toolbar-label {
         font-size: 1.4rem;
-        font-weight: 700;
+        font-weight: 900;
         margin-top:0.2rem;
         margin-bottom: -1.8rem;
       }
