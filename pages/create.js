@@ -21,6 +21,9 @@ export const getServerSideProps = async (context) => {
 export default function Create() {
   const router = useRouter();
   const { data: session } = useSession();
+  const a = getCurrentDate().replaceAll(".", "-").slice(0, 10);
+  const b = new Date().toISOString().slice(0, -14);
+  console.log(getCurrentDate());
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -70,8 +73,8 @@ export default function Create() {
             type="date"
             name="date"
             id="date"
-            title="give a task name"
-            min={getCurrentDate().replaceAll(".", "-").slice(0, 10)}
+            title="give a date"
+            min={new Date().toISOString().slice(0, -14)}
             required
           />
           <Label htmlFor="startTime">Start Time</Label>
