@@ -5,9 +5,23 @@ import back from "../public/images/back.svg";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-
 import styled from "styled-components";
 import { useMemo } from "react";
+import { getSession } from "next-auth/react";
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/onboarding",
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+};
 
 export default function MyCalendar() {
   const router = useRouter();
