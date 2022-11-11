@@ -21,9 +21,6 @@ export const getServerSideProps = async (context) => {
 export default function Create() {
   const router = useRouter();
   const { data: session } = useSession();
-  const a = getCurrentDate().replaceAll(".", "-").slice(0, 10);
-  const b = new Date().toISOString().slice(0, -14);
-  console.log(getCurrentDate());
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -38,6 +35,7 @@ export default function Create() {
       email: session.user.email,
       ticoUser: session.user.name,
       totalTime: Number(durationHour) * 3600 + Number(durationMinute) * 60,
+      start: new Date(date + "T" + startTime + ":00"),
     };
     const JSONdata = JSON.stringify(data);
 
@@ -82,8 +80,8 @@ export default function Create() {
             type="time"
             name="startTime"
             id="startTime"
-            min="00:00"
-            max="24:00"
+            min="06:00"
+            max="23:59"
             required
           />
           <Label htmlFor="totalTime">totalTime</Label>
@@ -93,8 +91,8 @@ export default function Create() {
               name="durationHour"
               id="totalTime"
               min={0}
-              max={24}
-              title="give a number between 0 and 24"
+              max={18}
+              title="give a number between 0 and 18"
               required
             />
             <Text>h</Text>

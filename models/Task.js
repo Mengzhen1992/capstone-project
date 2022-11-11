@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 
 const taskSchema = new Schema({
   name: { type: String, required: true },
+  start: { type: Date, required: true },
   totalTime: { type: Number, required: true },
   finishedTime: { type: Number, required: true, default: 0 },
   isStarted: { type: Boolean, required: true, default: false },

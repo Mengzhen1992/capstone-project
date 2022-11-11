@@ -13,12 +13,14 @@ export default function Welcome() {
       {session && (
         <Wrap>
           <WelcomeText>Hi {session.user.name}</WelcomeText>
-          <Calendarbutton onClick={() => router.push("/calendar")}>
-            <Image src={calendar} alt="button to calendar" />
-          </Calendarbutton>
-          <Logoutbutton onClick={() => signOut()}>
-            <Image src={logout} alt="button to logout" />
-          </Logoutbutton>
+          <ImageWrap>
+            <Calendarbutton onClick={() => router.push("/calendar")}>
+              <Image src={calendar} alt="button to calendar" />
+            </Calendarbutton>
+            <Logoutbutton onClick={() => signOut()}>
+              <Image src={logout} alt="button to logout" />
+            </Logoutbutton>
+          </ImageWrap>
         </Wrap>
       )}
     </>
@@ -39,11 +41,14 @@ const WelcomeText = styled.h2`
   font-size: 1.8rem;
 `;
 
+const ImageWrap = styled.div`
+  display: flex;
+`;
+
 const Calendarbutton = styled.button`
   background: transparent;
   border-style: none;
   margin-top: 2.6rem;
-  margin-right: -3rem;
   color: #000;
   text-align: right;
   cursor: pointer;
@@ -54,6 +59,7 @@ const Logoutbutton = styled.button`
   border-style: none;
   font-size: 1.5rem;
   margin-top: 2.7rem;
+  padding-left: 0.5rem;
   text-align: right;
   cursor: pointer;
 `;

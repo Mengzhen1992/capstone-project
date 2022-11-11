@@ -8,6 +8,8 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import styled from "styled-components";
 import { useMemo } from "react";
 import { getSession } from "next-auth/react";
+import Task from "../models/Task";
+import dbConnect from "../lib/dbConnect";
 
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
@@ -18,12 +20,26 @@ export const getServerSideProps = async (context) => {
       },
     };
   }
-  return {
-    props: { session },
-  };
+
+  await dbConnect();
+
+  const result = await Task.find({ email: session.user.email });
+
+  const tasks = result.map((item) => {
+    const startDate = item.start;
+    const endDate = new Date(item.start.getTime() + item.totalTime * 1000);
+
+    return {
+      id: item.id,
+      title: item.name,
+      start: startDate.toJSON(),
+      end: endDate.toJSON(),
+    };
+  });
+  return { props: { tasks: tasks } };
 };
 
-export default function MyCalendar() {
+export default function MyCalendar({ tasks }) {
   const router = useRouter();
   const localizer = momentLocalizer(moment);
   const { defaultDate, views } = useMemo(
@@ -35,21 +51,14 @@ export default function MyCalendar() {
     }),
     []
   );
-  const events = [
-    {
-      id: 0,
-      title: "Board meeting",
-      start: new Date(2022, 10, 10, 9, 0, 0),
-      end: new Date(2022, 10, 10, 13, 0, 0),
-    },
-    {
-      id: 1,
-      title: "MS training",
-      allDay: false,
-      start: new Date(2022, 10, 10, 14, 0, 0),
-      end: new Date(2022, 10, 10, 16, 30, 0),
-    },
-  ];
+
+  const events = tasks.map((item) => ({
+    id: item.id,
+    title: item.title,
+    start: new Date(item.start),
+    end: new Date(item.end),
+  }));
+
   return (
     <LayoutStyle>
       <ImageContainer onClick={() => router.push("/")}>
@@ -79,13 +88,12 @@ const CalenderWrap = styled.div`
   background: var(--color-background);
   box-shadow: var(--shadow-box);
   border-radius: 10px;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--color-taskname);
   opacity: 0.9;
 `;
 
 const ImageContainer = styled.div`
   grid-column: 2 / span 1;
-  grid-row: 2 / span 1;
-  margin-top: -2rem;
+  margin-top: 2rem;
 `;
