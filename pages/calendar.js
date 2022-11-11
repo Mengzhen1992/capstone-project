@@ -53,8 +53,7 @@ export default function MyCalendar({ tasks }) {
   );
 
   const events = tasks.map((item) => ({
-    id: item.id,
-    title: item.title,
+    ...item,
     start: new Date(item.start),
     end: new Date(item.end),
   }));
