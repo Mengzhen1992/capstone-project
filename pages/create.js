@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutSytle from "../components/LayoutStyle";
-import { getCurrentDate } from "../ultils";
 import { useSession, getSession } from "next-auth/react";
 
 export const getServerSideProps = async (context) => {

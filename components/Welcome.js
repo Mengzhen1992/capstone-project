@@ -49,7 +49,6 @@ const Calendarbutton = styled.button`
   background: transparent;
   border-style: none;
   margin-top: 2.6rem;
-  color: #000;
   text-align: right;
   cursor: pointer;
 `;

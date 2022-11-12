@@ -16,6 +16,7 @@ const GlobalStyle = createGlobalStyle`
           --color-taskname: rgba(0, 0, 0, 0.8);
           --color-date: rgba(0, 0, 0, 0.6);
           --color-text: #000000;
+          --color-calendar-border: /* rgba(223, 30, 123, 0.2) */rgba(0, 0, 0, 0.25);
           --shadow-box: 0px 4px 20px rgba(0, 0, 0, 0.1);
           --shadow-addbutton: 0px 4px 20px rgba(0, 0, 0, 0.15);
           --shadow-text: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -59,28 +60,27 @@ const GlobalStyle = createGlobalStyle`
       .rbc-btn-group button {
         background: var(--color-button);
         font-family: var(--font-primary);
-        font-size: 1.1rem;
+        font-size: 1rem;
         color: var(--color-button-font);
-        margin: 1.5rem 1rem 0.8rem 1rem;
+        margin: 0.5rem 1rem 0.8rem 1rem;
         box-shadow: var(--shadow-box);
         border: 1px solid var(--shadow-addbutton);
       }
       .rbc-btn-group > button:first-child:not(:last-child), 
       .rbc-btn-group > button:not(:first-child):not(:last-child),
       .rbc-btn-group > button:last-child:not(:first-child) {
-        border-radius: 10px;
+        border-radius: 15px;
       }
       
       .rbc-toolbar-label {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
         font-weight: 900;
-        margin-top:0.2rem;
-        margin-bottom: -1.8rem;
+        margin-top:0.3rem;
+        margin-bottom: -1.5rem;
       }
 
       .rbc-time-view {
         border: none;
-        margin-bottom: 2rem;
       }
       
     
@@ -93,21 +93,21 @@ const GlobalStyle = createGlobalStyle`
       }
 
       .rbc-time-content {
-        border-top: 1.5px solid silver;
+        background: var(--color-background);
+        box-shadow: var(--shadow-box);
+        border-radius: 10px;
+        border-top: none;
+        padding-top:1rem;
+        padding-bottom: 0.5rem;
       }
 
       .rbc-timeslot-group {
         border-bottom: none;
-        min-height: 50px;
-      }
-
-      .rbc-timeslot-group:nth-last-child(1) {
-        border-bottom: 1.5px solid silver;
+        min-height: 45px;
       }
 
       .rbc-time-content > * + * > * {
-        border-left: 1.5px solid silver;
-        border-bottom: 1.5px solid silver;
+        border-left: none;
       }
 
       .rbc-day-slot .rbc-time-slot {

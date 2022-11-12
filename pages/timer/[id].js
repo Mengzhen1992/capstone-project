@@ -152,7 +152,7 @@ const TimerTitle = styled.h2`
   grid-row: 2 / span 1;
   font-size: 2.5rem;
   justify-self: center;
-  margin-top: 1.5rem;
+  /* margin-top: 0.5rem; */
 `;
 
 const TimerClock = styled.div`
@@ -174,7 +174,7 @@ const TimerClock = styled.div`
 const PauseButton = styled.button`
   position: absolute;
   right: 20%;
-  bottom: 15%;
+  bottom: 12%;
   border: none;
   height: 71px;
   width: 71px;
@@ -186,7 +186,7 @@ const PauseButton = styled.button`
 const ReturnButton = styled.button`
   position: absolute;
   left: 20%;
-  bottom: 15%;
+  bottom: 12%;
   border: none;
   height: 71px;
   width: 71px;

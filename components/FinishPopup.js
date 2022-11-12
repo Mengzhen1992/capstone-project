@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Overlay } from "./DeletePopup";
+import lottie from "lottie-web";
 
 export default function FinishPopup({ onFinish }) {
+  const container = useRef(null);
+  useEffect(() => {
+    const instance = lottie.loadAnimation({
+      container: container.current,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      animationData: require("../public/images/congratulation.json"),
+    });
+
+    // return clean up function here
+    return () => instance.destroy();
+  }, []);
+
   return (
     <Overlay>
       <DeletePopupContainer>
+        <div className="container" ref={container}></div>
         <FinishTitle>Congratulations!</FinishTitle>
         <FinishText>you have successfully completed this task!</FinishText>
         <FinishButton onClick={onFinish}>Home</FinishButton>
@@ -17,8 +33,8 @@ const DeletePopupContainer = styled.div`
   position: absolute;
   left: 1.5rem;
   right: 1.5rem;
-  top: 20%;
-  bottom: 40%;
+  top: 5%;
+  bottom: 5%;
   padding: 2.5rem;
   background: var(--color-popup);
   box-shadow: var(--shadow-box);

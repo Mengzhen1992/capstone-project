@@ -6,7 +6,10 @@ export function getCurrentDate() {
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
-  const dates = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+  const dates =
+    date.getDate() < 10
+      ? date.getDate().toString().padStart(2, "0")
+      : date.getDate();
   const arr = [
     "Sunday",
     "Monday",

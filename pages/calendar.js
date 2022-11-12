@@ -83,16 +83,11 @@ export default function MyCalendar({ tasks }) {
 const CalenderWrap = styled.div`
   grid-column: 2 / span 1;
   grid-row: 3 / span 1;
-  margin-top: -1rem;
-  background: var(--color-background);
-  box-shadow: var(--shadow-box);
-  border-radius: 10px;
-  font-size: 1.1rem;
-  color: var(--color-taskname);
-  opacity: 0.9;
+  margin-top: -3.2rem;
+  font-size: 1.2rem;
 `;
 
 const ImageContainer = styled.div`
   grid-column: 2 / span 1;
-  margin-top: 2rem;
+  margin-top: 1.6rem;
 `;
