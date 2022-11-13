@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutSytle from "../components/LayoutStyle";
 import { useSession, getSession } from "next-auth/react";
+import { useState } from "react";
 
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
@@ -20,21 +21,30 @@ export const getServerSideProps = async (context) => {
 export default function Create() {
   const router = useRouter();
   const { data: session } = useSession();
+  const [start, setStart] = useState("");
+
+  function handleChange(event) {
+    const value = event.target.value;
+    setStart(value);
+  }
 
   async function handleSubmit(event) {
     event.preventDefault();
 
     // Get data from form
     const formData = new FormData(event.target);
-    const { name, date, startTime, durationHour, durationMinute } =
-      Object.fromEntries(formData);
+    const { name, date, startTime, endTime } = Object.fromEntries(formData);
     const data = {
       name: name,
       isFinished: false,
       email: session.user.email,
       ticoUser: session.user.name,
-      totalTime: Number(durationHour) * 3600 + Number(durationMinute) * 60,
       start: new Date(date + "T" + startTime + ":00"),
+      end: new Date(date + "T" + endTime + ":00"),
+      totalTime:
+        (new Date(date + "T" + endTime + ":00").getTime() -
+          new Date(date + "T" + startTime + ":00").getTime()) /
+        1000,
     };
     const JSONdata = JSON.stringify(data);
 
@@ -61,7 +71,7 @@ export default function Create() {
             type="text"
             name="name"
             id="name"
-            pattern="^(?!\s)[a-zA-Z ]{1,}$"
+            pattern="^(?!\s)[a-zA-Z0-9 ]{1,}$"
             title="the name cannot be empty!"
             required
           />
@@ -81,31 +91,18 @@ export default function Create() {
             id="startTime"
             min="06:00"
             max="23:59"
+            onChange={handleChange}
             required
           />
-          <Label htmlFor="totalTime">totalTime</Label>
-          <InputWrap>
-            <DurationInput
-              type="number"
-              name="durationHour"
-              id="totalTime"
-              min={0}
-              max={18}
-              title="give a number between 0 and 18"
-              required
-            />
-            <Text>h</Text>
-            <DurationInput
-              type="number"
-              name="durationMinute"
-              id="totalTime"
-              min={0}
-              max={60}
-              title="give a number between 0 and 60"
-              required
-            />
-            <Text>min</Text>
-          </InputWrap>
+          <Label htmlFor="ednTime">End Time</Label>
+          <Input
+            type="time"
+            name="endTime"
+            id="endTime"
+            min={start}
+            max="23:59"
+            required
+          />
           <Button
             onClick={(event) => {
               event.preventDefault();
@@ -140,11 +137,6 @@ export const Title = styled.h2`
   align-self: center;
 `;
 
-const InputWrap = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
 const Label = styled.label`
   display: block;
   font-size: 1.2rem;
@@ -162,29 +154,6 @@ const Input = styled.input`
   backdrop-filter: blur(30px);
   border-radius: 5px;
   font-family: var(--font-primary);
-  font-size: 1.2rem;
-`;
-
-const DurationInput = styled.input`
-  border: 0;
-  width: 28%;
-  height: 2rem;
-  background: var(--color-task);
-  box-shadow: var(--shadow-box);
-  backdrop-filter: blur(30px);
-  border-radius: 5px;
-  font-family: var(--font-primary);
-  font-size: 1.2rem;
-`;
-const Text = styled.p`
-  width: 18%;
-  height: 2rem;
-  text-align: center;
-  line-height: 2rem;
-  background: var(--color-task);
-  box-shadow: var(--shadow-text);
-  backdrop-filter: blur(30px);
-  border-radius: 5px;
   font-size: 1.2rem;
 `;
 
