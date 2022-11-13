@@ -64,8 +64,8 @@ export default function Create() {
   return (
     <LayoutSytle>
       <FormContainer>
-        <Title>Create New Task</Title>
-        <form onSubmit={handleSubmit}>
+        <form aria-labelledby="formHeader" onSubmit={handleSubmit}>
+          <Title id="formHeader">Create New Task</Title>
           <Label htmlFor="name">Title</Label>
           <Input
             type="text"
@@ -134,7 +134,7 @@ const FormContainer = styled.main`
 
 export const Title = styled.h2`
   font-size: 1.5rem;
-  align-self: center;
+  text-align: center;
 `;
 
 const Label = styled.label`
