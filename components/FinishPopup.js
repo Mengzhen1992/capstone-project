@@ -31,6 +31,9 @@ export default function FinishPopup({ onFinish }) {
 }
 const DeletePopupContainer = styled.div`
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   left: 1.5rem;
   right: 1.5rem;
   top: 5%;
@@ -43,15 +46,15 @@ const DeletePopupContainer = styled.div`
 
 const FinishTitle = styled.h2`
   text-align: center;
-  font-size: 36px;
-  line-height: 36px;
+  font-size: 2.5rem;
+  line-height: 2.5rem;
   color: var(--color-percent);
   text-shadow: var(--shadow-text);
 `;
 
 const FinishText = styled.p`
-  font-size: 24px;
-  line-height: 36px;
+  font-size: 1.5rem;
+  line-height: 2.25rem;
   text-align: center;
   margin: 2rem auto;
   color: var(--color-text);

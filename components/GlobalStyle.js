@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
           --color-button-hover: rgba(223, 30, 123, 0.8);
           --color-addbutton: rgba(255, 255, 255, 0.45);
           --color-addbutton-border: rgba(255, 255, 255, 0.15);
-          --color-popup: rgba(255, 255, 255, 0.8);
+          --color-popup: rgba(255, 255, 255, 0.9);
           --color-taskname: rgba(0, 0, 0, 0.8);
           --color-date: rgba(0, 0, 0, 0.6);
           --color-text: #000000;
