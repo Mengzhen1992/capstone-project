@@ -150,9 +150,8 @@ export default function Timer({ task }) {
 const TimerTitle = styled.h2`
   grid-column: 2 / span 1;
   grid-row: 2 / span 1;
-  font-size: 2.5rem;
+  font-size: 3rem;
   justify-self: center;
-  margin-top: 1.5rem;
 `;
 
 const TimerClock = styled.div`
@@ -169,12 +168,13 @@ const TimerClock = styled.div`
   font-size: 4.5rem;
   font-weight: 700;
   line-height: 300px;
+  margin-top: -0.5rem;
 `;
 
 const PauseButton = styled.button`
   position: absolute;
   right: 20%;
-  bottom: 15%;
+  bottom: 12%;
   border: none;
   height: 71px;
   width: 71px;
@@ -186,7 +186,7 @@ const PauseButton = styled.button`
 const ReturnButton = styled.button`
   position: absolute;
   left: 20%;
-  bottom: 15%;
+  bottom: 12%;
   border: none;
   height: 71px;
   width: 71px;

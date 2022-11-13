@@ -1,19 +1,26 @@
 import styled from "styled-components";
 import { useSession, signOut } from "next-auth/react";
 import logout from "../public/images/logout.svg";
-
+import calendar from "../public/images/calendar.svg";
+import { useRouter } from "next/router";
 import Image from "next/image";
 
 export default function Welcome() {
   const { data: session } = useSession();
+  const router = useRouter();
   return (
     <>
       {session && (
         <Wrap>
           <WelcomeText>Hi {session.user.name}</WelcomeText>
-          <Logoutbutton onClick={() => signOut()}>
-            <Image src={logout} alt="button to logout" />
-          </Logoutbutton>
+          <ImageWrap>
+            <Calendarbutton onClick={() => router.push("/calendar")}>
+              <Image src={calendar} alt="button to calendar" />
+            </Calendarbutton>
+            <Logoutbutton onClick={() => signOut()}>
+              <Image src={logout} alt="button to logout" />
+            </Logoutbutton>
+          </ImageWrap>
         </Wrap>
       )}
     </>
@@ -34,11 +41,24 @@ const WelcomeText = styled.h2`
   font-size: 1.8rem;
 `;
 
+const ImageWrap = styled.div`
+  display: flex;
+`;
+
+const Calendarbutton = styled.button`
+  background: transparent;
+  border-style: none;
+  margin-top: 2.6rem;
+  text-align: right;
+  cursor: pointer;
+`;
+
 const Logoutbutton = styled.button`
   background: transparent;
   border-style: none;
   font-size: 1.5rem;
   margin-top: 2.7rem;
+  padding-left: 0.5rem;
   text-align: right;
   cursor: pointer;
 `;

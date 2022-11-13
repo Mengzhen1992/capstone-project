@@ -53,14 +53,14 @@ const GithubForm = styled.form`
   grid-column: 2 / span 1;
   grid-row: 3 / span 1;
   justify-self: center;
-  margin-top: 12rem;
+  margin-top: 9rem;
 `;
 
 const GoogleForm = styled.form`
   grid-column: 2 / span 1;
   grid-row: 3 / span 1;
   justify-self: center;
-  margin-top: 16rem;
+  margin-top: 13rem;
 `;
 
 const Text = styled.p`
