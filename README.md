@@ -22,5 +22,5 @@ Tico is a easy task & time management app which you can quickly add and manage v
 - styled-components
 - MongoDB
 - Mongoose
-- React-Testing-library
+- Jest
 - Next-auth
