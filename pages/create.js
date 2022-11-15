@@ -73,6 +73,7 @@ export default function Create() {
             id="name"
             pattern="^(?!\s)[a-zA-Z0-9 ]{1,}$"
             title="the name cannot be empty!"
+            autoComplete="off"
             required
           />
           <Label htmlFor="date">Date</Label>
