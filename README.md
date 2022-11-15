@@ -4,7 +4,7 @@ Tico is a easy task & time management app which you can quickly add and manage v
 
 # Preview
 
-![Tico](../capstone-project/public/images/preview.gif)
+![image](https://github.com/Mengzhen1992/capstone-project/blob/main/public/images/preview.gif)
 
 # Features
 
