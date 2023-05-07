@@ -5,7 +5,7 @@ import deleteButton from "../public/images/deleteButton.svg";
 import playButton from "../public/images/playButton.svg";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { displayDuration } from "../ultils";
+import { displayDuration } from "../utils";
 
 const TaskItem = ({
   id,

@@ -1,4 +1,4 @@
-import { generateID } from "../ultils";
+import { generateID } from "../utils";
 
 const initialTasks = [
   {
