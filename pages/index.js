@@ -7,7 +7,7 @@ import DeletePopup from "../components/DeletePopup";
 import { useState } from "react";
 import Task from "../models/Task";
 import dbConnect from "../lib/dbConnect";
-import { getCurrentDate } from "../ultils";
+import { getCurrentDate } from "../utils";
 import { useRouter } from "next/router";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";

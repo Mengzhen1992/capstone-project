@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import LayoutSytle from "../../components/LayoutStyle";
 import Task from "../../models/Task";
-import { displayTime } from "../../ultils";
+import { displayTime } from "../../utils";
 import { useRouter } from "next/router";
 import pause from "../../public/images/pause.svg";
 import returnButton from "../../public/images/return.svg";
