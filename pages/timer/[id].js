@@ -9,10 +9,20 @@ import returnButton from "../../public/images/return.svg";
 import start from "../../public/images/start.svg";
 import Image from "next/image";
 import FinishPopup from "../../components/FinishPopup";
+import { getSession } from "next-auth/react";
 
 export async function getServerSideProps(context) {
-  const { id } = await context.query;
+  const session = await getSession(context);
 
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/onboarding",
+        permanent: false,
+      },
+    };
+  }
+  const { id } = await context.query;
   const result = await Task.findById(id).exec();
   const task = {
     id: id,

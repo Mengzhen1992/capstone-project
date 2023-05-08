@@ -1,7 +1,12 @@
+import { unstable_getServerSession } from "next-auth";
 import dbConnect from "../../../lib/dbConnect";
 import Task from "../../../models/Task";
+import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(req, res) {
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (!session) return res.status(401).json({ message: "Unanthorized" });
+  
   const {
     query: { id },
     method,

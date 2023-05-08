@@ -5,15 +5,14 @@ import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(req, res) {
   const session = await unstable_getServerSession(req, res, authOptions);
-  const { method } = req;
-
-  await dbConnect();
-
   if (!session) return res.status(401).json({ message: "Unanthorized" });
+
+  const { method } = req;
+  await dbConnect();
   switch (method) {
     case "GET":
       try {
-        const tasks = await Task.find({});
+        const tasks = await Task.find({ email: session.user.email });
         //find all the data in our database
         res.status(200).json({ success: true, data: tasks });
       } catch (error) {

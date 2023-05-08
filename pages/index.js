@@ -9,35 +9,34 @@ import Task from "../models/Task";
 import dbConnect from "../lib/dbConnect";
 import { getCurrentDate } from "../utils";
 import { useRouter } from "next/router";
-import { authOptions } from "../pages/api/auth/[...nextauth]";
-import { unstable_getServerSession } from "next-auth/next";
+import { getSession } from "next-auth/react";
 
-export async function getServerSideProps(context) {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
+
+export async function getServerSideProps({req, res}) {
+  const session = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/onboarding",
+        permanent: false,
+      },
+    };
+  }
+
   await dbConnect();
 
-  if (session) {
-    const result = await Task.find({ email: session.user.email });
+  const result = await Task.find({ email: session.user.email });
 
-    const tasks = result.map((item) => ({
-      id: item.id,
-      name: item.name,
-      totalTime: item.totalTime,
-      finishedTime: item.finishedTime,
-      isFinished: item.isFinished,
-    }));
+  const tasks = result.map((item) => ({
+    id: item.id,
+    name: item.name,
+    totalTime: item.totalTime,
+    finishedTime: item.finishedTime,
+    isFinished: item.isFinished,
+  }));
 
-    return { props: { tasks: tasks } };
-  }
-  return {
-    redirect: {
-      destination: "/onboarding",
-    },
-  };
+  return { props: { tasks: tasks } };
 }
 
 export default function Home({ tasks }) {
